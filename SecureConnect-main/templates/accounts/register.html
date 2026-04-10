@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="min-h-[70vh] flex items-center justify-center px-8 py-20">
+    <div class="luxury-card p-10 max-w-md w-full relative overflow-hidden group">
+        <!-- Glow effect -->
+        <div
+            class="absolute -top-10 -right-10 w-32 h-32 bg-primary rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition-opacity duration-700">
+        </div>
+
+        <div class="text-center mb-10 z-10 relative">
+            <h1 class="font-heading text-4xl font-bold mb-2 glitch-text" data-text="Operator Registration">Operator
+                Registration</h1>
+            <p class="font-mono text-sm opacity-70">Create a secure profile</p>
+        </div>
+
+        <form method="post" action="{% url 'accounts:register' %}" class="space-y-6 z-10 relative">
+            {% csrf_token %}
+            <div>
+                <label class="block font-mono text-xs uppercase tracking-widest text-[#C08552] mb-2">Username</label>
+                <input type="text" name="username"
+                    class="w-full bg-transparent border-b border-border focus:border-primary px-2 py-3 outline-none font-body text-lg transition-colors placeholder-opacity-30"
+                    required>
+            </div>
+            <div>
+                <label class="block font-mono text-xs uppercase tracking-widest text-[#C08552] mb-2">Email
+                    Address</label>
+                <input type="email" name="email"
+                    class="w-full bg-transparent border-b border-border focus:border-primary px-2 py-3 outline-none font-body text-lg transition-colors placeholder-opacity-30"
+                    required>
+            </div>
+            <div>
+                <label class="block font-mono text-xs uppercase tracking-widest text-[#C08552] mb-2">Password</label>
+                <input type="password" name="password1"
+                    class="w-full bg-transparent border-b border-border focus:border-primary px-2 py-3 outline-none font-body text-lg transition-colors placeholder-opacity-30"
+                    required>
+            </div>
+            <div>
+                <label class="block font-mono text-xs uppercase tracking-widest text-[#C08552] mb-2">Confirm
+                    Password</label>
+                <input type="password" name="password2"
+                    class="w-full bg-transparent border-b border-border focus:border-primary px-2 py-3 outline-none font-body text-lg transition-colors placeholder-opacity-30"
+                    required>
+            </div>
+
+            <button type="submit"
+                class="w-full btn-primary py-4 font-mono uppercase tracking-widest text-sm mt-4 cursor-pointer">
+                Initialize Account
+            </button>
+        </form>
+
+        <div class="mt-8 text-center font-mono text-xs opacity-70 border-t border-border pt-6">
+            <p>Existing operator? <a href="{% url 'accounts:login' %}"
+                    class="text-[#C08552] hover:underline">Authenticate</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}

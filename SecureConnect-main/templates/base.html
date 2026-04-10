@@ -1,0 +1,429 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SECUREWAY - Luxury Cybersecurity Platform{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS with Variable Injection -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* Default: Luxury Cream */
+            --background: #FFF8F0;
+            --heading: #4B2E2B;
+            --text: #2D1810;
+            --primary: #C08552;
+            --border: rgba(192, 133, 82, 0.22);
+            --card: rgba(192, 133, 82, 0.06);
+            --glass: rgba(255, 248, 240, 0.7);
+        }
+
+        .dark-theme {
+            /* Neural Obsidian */
+            --background: #120907;
+            --heading: #F9F3ED;
+            --text: #D9D3CC;
+            --primary: #C08552;
+            --border: rgba(192, 133, 82, 0.3);
+            --card: rgba(255, 255, 255, 0.03);
+            --glass: rgba(18, 9, 7, 0.85);
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s ease;
+        }
+
+        .text-heading {
+            color: var(--heading);
+        }
+
+        .bg-card {
+            background-color: var(--card);
+        }
+
+        .glass-navbar {
+            background: var(--glass) !important;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--primary)',
+                        background: 'var(--background)',
+                        heading: 'var(--heading)',
+                        text: 'var(--text)',
+                        border: 'var(--border)',
+                        card: 'var(--card)'
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Cormorant Garamond', 'serif'],
+                        mono: ['DM Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body class="bg-background text-text font-body antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+    <!-- Particle Background Placeholder -->
+    <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-[-1]"></canvas>
+
+    <!-- Glassmorphism Navbar -->
+    <nav
+        class="fixed top-0 left-0 w-full z-50 glass-navbar px-8 py-4 flex justify-between items-center transition-all duration-300">
+        <a href="/" class="text-heading font-heading text-2xl font-bold tracking-wider glitch-text"
+            data-text="SECUREWAY">
+            SECUREWAY
+        </a>
+        <div class="hidden md:flex space-x-8 font-mono text-sm uppercase tracking-widest items-center text-heading">
+            <a href="{% url 'core:features' %}" class="hover:text-primary transition-colors">Features</a>
+            <a href="{% url 'core:pricing' %}" class="hover:text-primary transition-colors">Pricing</a>
+            <a href="{% url 'core:docs' %}" class="hover:text-primary transition-colors">Docs</a>
+
+            <!-- Neural Switch Button (Premium Toggle) -->
+            <button id="themeToggle"
+                class="w-14 h-7 rounded-full bg-primary/5 border border-primary/20 relative transition-all duration-500 hover:border-primary/40 group overflow-hidden shadow-inner">
+                <div id="toggleKnob"
+                    class="absolute top-1 left-1 w-5 h-5 rounded-full bg-primary flex items-center justify-center transition-all duration-500 shadow-lg">
+                    <i class="fas fa-sun text-[10px] text-background block light-icon"></i>
+                    <i class="fas fa-moon text-[10px] text-background hidden dark-icon"></i>
+                </div>
+            </button>
+
+            {% if user.is_authenticated %}
+            {% if request.resolver_match.url_name != 'index' %}
+            <a href="{% url 'dashboard:overview' %}"
+                class="hover:text-primary transition-colors font-bold text-primary">Command Center</a>
+            {% endif %}
+            <form method="post" action="{% url 'accounts:logout' %}" class="inline">
+                {% csrf_token %}
+                <button type="submit"
+                    class="hover:text-primary transition-colors uppercase tracking-widest opacity-60 text-xs">Logout</button>
+            </form>
+            {% else %}
+            <a href="{% url 'accounts:login' %}" class="hover:text-primary transition-colors">Login</a>
+            <a href="{% url 'accounts:register' %}" class="btn-primary px-6 py-2">Get Started</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% if user.is_authenticated and request.resolver_match.url_name != 'index' %}
+    <!-- Enhanced Professional Sidebar -->
+    <aside
+        class="fixed left-0 top-0 h-full w-72 bg-background z-40 transform transition-all duration-500 border-r border-border pt-24 overflow-hidden flex flex-col shadow-[10px_0_30px_rgba(75,46,43,0.02)]">
+
+        <div class="flex-grow overflow-y-auto scrollbar-hide px-6 py-4 space-y-10">
+            <!-- Section: Primary Operations -->
+            <div>
+                <p class="text-[10px] uppercase tracking-[0.25em] text-primary/40 font-mono mb-6 px-4">Command Center
+                </p>
+                <nav class="space-y-1">
+                    <a href="{% url 'dashboard:overview' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'overview' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300">
+                            <i class="fas fa-th-large text-sm"></i>
+                        </div>
+                        <span class="text-xs font-mono tracking-widest uppercase">Dashboard</span>
+                    </a>
+                    <a href="{% url 'scanner:new_scan' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'new_scan' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300">
+                            <i class="fas fa-plus text-sm"></i>
+                        </div>
+                        <span class="text-xs font-mono tracking-widest uppercase">New Scan</span>
+                    </a>
+                    <a href="{% url 'scanner:scan_history' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'scan_history' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-history w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest uppercase">History</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Section: Specialized Labs -->
+            <div>
+                <p class="text-[10px] uppercase tracking-[0.25em] text-primary/40 font-mono mb-6 px-4">Security Labs</p>
+                <nav class="space-y-1">
+                    <a href="{% url 'scanner:analyze_bola' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'analyze_bola' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-brain w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">BOLA Lab</span>
+                    </a>
+                    <a href="{% url 'scanner:port_scan' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'port_scan' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-radar w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">Port Scan</span>
+                    </a>
+                    <a href="{% url 'scanner:shadow_map' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'shadow_map' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-project-diagram w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">Shadow Map</span>
+                    </a>
+                    <a href="{% url 'scanner:anomalies' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'anomalies' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-wave-square w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">Anomalies</span>
+                    </a>
+                    <a href="{% url 'scanner:threat_intel' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'threat_intel' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-globe-asia w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">Global Intelligence</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Section: Asset Management -->
+            <div>
+                <p class="text-[10px] uppercase tracking-[0.25em] text-primary/40 font-mono mb-6 px-4">Target Management
+                </p>
+                <nav class="space-y-1">
+                    <a href="{% url 'dashboard:add_domain' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'add_domain' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-globe w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">Register Target</span>
+                    </a>
+                    <a href="{% url 'scanner:oast_mesh' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'oast_mesh' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-network-wired w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">OAST Mesh</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Section: System Core -->
+            <div>
+                <p class="text-[10px] uppercase tracking-[0.25em] text-primary/40 font-mono mb-6 px-4">Infrastructure
+                </p>
+                <nav class="space-y-1">
+                    <a href="{% url 'scanner:kernel_status' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'kernel_status' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-microchip w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">Kernel Health</span>
+                    </a>
+                    <a href="{% url 'core:pii_scrubber' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'pii_scrubber' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-shield-halved w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">PII Scrubber</span>
+                    </a>
+                    <a href="{% url 'scanner:pipeline' %}"
+                        class="flex items-center space-x-4 px-4 py-3.5 rounded-xl hover:bg-card hover:text-text transition-all group {% if request.resolver_match.url_name == 'pipeline' %}bg-primary/10 text-primary active-nav{% endif %}">
+                        <i
+                            class="fas fa-bolt w-10 text-center text-primary opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                        <span class="text-xs font-mono tracking-widest">Auto Pipeline</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- User Profile Section at Bottom -->
+        <div class="p-6 border-t border-border bg-card/30">
+            <div class="flex items-center space-x-4 mb-6">
+                <div
+                    class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-heading font-bold">
+                    {{ user.username|first|upper }}
+                </div>
+                <div class="flex-grow overflow-hidden">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-heading truncate">{{ user.username }}
+                    </p>
+                    <p class="text-[8px] font-mono opacity-40 truncate lowercase">{{ user.email }}</p>
+                </div>
+            </div>
+            <form method="post" action="{% url 'accounts:logout' %}">
+                {% csrf_token %}
+                <button type="submit"
+                    class="w-full py-2.5 px-4 rounded-lg border border-border text-[9px] font-mono uppercase tracking-widest hover:bg-primary hover:text-background hover:border-primary transition-all">
+                    Sign Out Protocol
+                </button>
+            </form>
+        </div>
+    </aside>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main
+        class="flex-grow pt-24 {% if user.is_authenticated and request.resolver_match.url_name != 'index' %}pl-72{% endif %}">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% if not user.is_authenticated or request.resolver_match.url_name == 'index' %}
+    <!-- Enhanced Footer (Landing Page Only) -->
+    <footer class="py-20 px-8 border-t border-border bg-background mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-12 mb-16">
+            <div class="col-span-1 md:col-span-1">
+                <a href="/" class="text-heading font-heading text-3xl font-bold tracking-wider mb-6 block uppercase">
+                    SECUREWAY
+                </a>
+                <p class="leading-relaxed text-[11px] font-mono opacity-60 uppercase tracking-widest">
+                    Autonomous Logic <br>Orchestration Engine
+                </p>
+                <div class="mt-8 flex space-x-4 text-lg">
+                    <a href="https://github.com/Ritiksingh96-cmd" target="_blank"
+                        class="text-heading/40 hover:text-primary transition-all" title="GitHub Source"><i
+                            class="fab fa-github"></i></a>
+                    <a href="#" class="text-heading/40 hover:text-primary transition-all" title="LinkedIn Profile"><i
+                            class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-heading/40 hover:text-primary transition-all" title="Twitter Official"><i
+                            class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div>
+                <h5
+                    class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-8 px-1 border-l-2 border-primary/20">
+                    Platform Core</h5>
+                <ul class="space-y-4 text-xs font-mono uppercase tracking-widest opacity-70">
+                    <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Autonomous Scanner</a>
+                    </li>
+                    <li><a href="{% url 'scanner:analyze_bola' %}"
+                            class="hover:text-primary hover:pl-2 transition-all block text-primary font-bold">BOLA
+                            Intelligence</a></li>
+                    <li><a href="{% url 'scanner:oast_mesh' %}"
+                            class="hover:text-primary hover:pl-2 transition-all block">OAST Mesh Net</a></li>
+                    <li><a href="{% url 'scanner:shadow_map' %}"
+                            class="hover:text-primary hover:pl-2 transition-all block">Shadow DOM Logic</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5
+                    class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-8 px-1 border-l-2 border-primary/20">
+                    Operational Intel</h5>
+                <ul class="space-y-4 text-xs font-mono uppercase tracking-widest opacity-70">
+                    <li><a href="{% url 'core:docs' %}"
+                            class="hover:text-primary hover:pl-2 transition-all block">Technical Docs</a></li>
+                    <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">API Specification</a>
+                    </li>
+                    <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block text-green-600/60">System
+                            Status: Live</a></li>
+                    <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Security Research</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h5
+                    class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-8 px-1 border-l-2 border-primary/20">
+                    Strategy</h5>
+                <ul class="space-y-4 text-xs font-mono uppercase tracking-widest opacity-70">
+                    <li><a href="{% url 'core:pricing' %}"
+                            class="hover:text-primary hover:pl-2 transition-all block">Registry Pricing</a></li>
+                    <li><a href="{% url 'core:contact' %}"
+                            class="hover:text-primary hover:pl-2 transition-all block text-primary font-bold">Contact
+                            Us</a></li>
+                    <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Careers</a></li>
+                    <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">India Innovation 2026</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h5
+                    class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-8 px-1 border-l-2 border-primary/20">
+                    Authorized</h5>
+                <p class="text-[9px] font-mono leading-relaxed opacity-40 uppercase tracking-widest">
+                    Securing the global logic fabric through autonomous agents. Trusted by elite teams worldwide.
+                </p>
+                <div class="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/10">
+                    <p class="text-[8px] font-mono text-primary/60 uppercase mb-2">Security Certifications</p>
+                    <div class="flex space-x-3 opacity-30">
+                        <i class="fas fa-shield-halved"></i>
+                        <i class="fas fa-lock text-primary"></i>
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto pt-8 border-t border-border flex justify-between items-center text-[10px] font-mono uppercase tracking-[0.2em] opacity-60">
+            <p>© 2026 SECUREWAY. All rights reserved.</p>
+            <div class="space-x-8">
+                <a href="#" class="hover:text-primary transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-primary transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+    {% else %}
+    <!-- Minimal Sidebar Footer (Dashboard Only) -->
+    <footer
+        class="py-6 px-4 md:px-8 border-t border-border/10 flex justify-between items-center text-[9px] font-mono tracking-widest opacity-30 mt-auto ml-72">
+        <p>© 2026 SECUREWAY OPERATIONAL COMMAND</p>
+        <div class="space-x-4">
+            <a href="#" class="hover:text-primary">SYSTEM STATUS</a>
+            <a href="{% url 'core:contact' %}" class="hover:text-primary">SUPPORT</a>
+        </div>
+    </footer>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const toggleKnob = document.getElementById('toggleKnob');
+            const sunIcon = themeToggle.querySelector('.light-icon');
+            const moonIcon = themeToggle.querySelector('.dark-icon');
+            const htmlElement = document.documentElement;
+
+            // Load saved theme
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            if (currentTheme === 'dark') {
+                htmlElement.classList.add('dark-theme');
+                updateToggleUI(true);
+            }
+
+            function updateToggleUI(isDark) {
+                if (isDark) {
+                    toggleKnob.style.transform = 'translateX(28px)';
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                    themeToggle.classList.add('bg-primary/20');
+                } else {
+                    toggleKnob.style.transform = 'translateX(0px)';
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                    themeToggle.classList.remove('bg-primary/20');
+                }
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const isDark = htmlElement.classList.toggle('dark-theme');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateToggleUI(isDark);
+            });
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

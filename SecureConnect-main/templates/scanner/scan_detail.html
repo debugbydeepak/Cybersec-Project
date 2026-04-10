@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Scan Detail - {{ scan.id|stringformat:"s"|slice:":8" }} - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="font-heading text-4xl font-bold mb-2">Scan Report: {{ scan.id|stringformat:"s"|slice:":8" }}...
+            </h1>
+            <p class="font-mono text-sm opacity-70 tracking-widest uppercase">Expert Telemetry Dispatch - {{
+                scan.domain.domain_url }}</p>
+        </div>
+        <div class="flex space-x-4">
+            <span
+                class="px-3 py-1 bg-[rgba(192,133,82,0.1)] text-primary font-mono text-xs border border-primary rounded">{{
+                scan.status|upper }}</span>
+            <a href="{% url 'scanner:download_report' scan.id %}"
+                class="btn-primary px-6 py-2 text-xs uppercase tracking-widest font-mono shadow-[0_5px_15px_rgba(192,133,82,0.2)]">
+                <i class="fas fa-file-download mr-2"></i> Download Report
+            </a>
+            <a href="{% url 'dashboard:overview' %}" class="btn-outline px-4 py-2 text-xs uppercase font-mono">Back to
+                Center</a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Analysis Column -->
+        <div class="lg:col-span-2 space-y-8">
+            <h2 class="font-heading text-2xl font-bold flex items-center">
+                <i class="fas fa-microchip mr-3 text-primary"></i> Live Threat Intelligence
+            </h2>
+
+            {% if scan.vulnerabilities.all %}
+            <div class="space-y-6">
+                {% for threat in scan.vulnerabilities.all %}
+                <div
+                    class="luxury-card p-6 border-l-4 {% if threat.severity == 'CRITICAL' %}border-l-red-500{% elif threat.severity == 'HIGH' %}border-l-orange-500{% else %}border-l-primary{% endif %}">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span
+                                class="font-mono text-[10px] uppercase bg-black text-primary border border-primary px-2 py-0.5 rounded">{{
+                                threat.vuln_type }}</span>
+                            <h3 class="font-heading text-xl font-bold mt-2">{{ threat.endpoint }}</h3>
+                        </div>
+                        <span
+                            class="font-mono text-xs font-bold {% if threat.severity == 'CRITICAL' %}text-red-500{% else %}text-primary{% endif %}">{{
+                            threat.severity }}</span>
+                    </div>
+
+                    <div class="bg-[rgba(192,133,82,0.05)] p-4 rounded mb-4 border border-[rgba(192,133,82,0.1)]">
+                        <p class="font-mono text-[10px] uppercase opacity-50 mb-1">Reasoning:</p>
+                        <p class="font-body text-sm leading-relaxed">{{ threat.ai_explanation }}</p>
+                    </div>
+
+                    {% if threat.ai_fix_suggestion %}
+                    <div class="bg-black/5 p-4 rounded mb-4 border border-[rgba(192,133,82,0.1)]">
+                        <p class="font-mono text-[10px] uppercase opacity-50 mb-1">Recommended Fix:</p>
+                        <p class="font-mono text-xs text-primary font-bold">{{ threat.ai_fix_suggestion }}</p>
+                    </div>
+                    {% endif %}
+
+                    {% if threat.proof_of_exploit %}
+                    <div class="mt-4 bg-black p-4 rounded border border-border">
+                        <p class="font-mono text-[10px] opacity-50 mb-3 uppercase">Proof of Exploit</p>
+                        <pre
+                            class="text-[10px] font-mono text-green-500/80 overflow-x-auto whitespace-pre-wrap">{{ threat.proof_of_exploit }}</pre>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="luxury-card p-20 text-center opacity-30">
+                <i class="fas fa-shield-check text-5xl mb-4"></i>
+                <p class="font-mono">Clean Scan: No active threats detected in kernel space.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar Progress & Metrics -->
+        <div class="space-y-8">
+            <div class="luxury-card p-6">
+                <h3 class="font-heading font-bold mb-4 uppercase text-xs tracking-widest opacity-70">Orchestrator Status
+                </h3>
+                <div class="w-full bg-border h-2 rounded-full overflow-hidden mb-2">
+                    <div class="bg-primary h-full transition-all duration-1000"
+                        style="width: {% if scan.status == 'COMPLETED' %}100{% else %}50{% endif %}%">
+                    </div>
+                </div>
+                <div class="flex justify-between font-mono text-[10px]">
+                    <span>Analysis Speed: 1.2 GB/s</span>
+                    <span class="text-primary font-bold">{% if scan.status == "COMPLETED" %}100{% else %}50{% endif
+                        %}%</span>
+                </div>
+            </div>
+
+            <div class="padding-card bg-[rgba(192,133,82,0.03)] border border-[rgba(192,133,82,0.1)] p-6 rounded">
+                <h3 class="font-heading font-bold mb-4 uppercase text-xs tracking-widest opacity-70">Engine Heartbeat
+                </h3>
+                <ul class="space-y-3 font-mono text-[10px]">
+                    <li class="flex justify-between"><span class="opacity-70">Risk Index:</span> <span
+                            class="text-red-500 font-bold font-mono">{{ scan.risk_score }}/100</span></li>
+                    <li class="flex justify-between"><span class="opacity-70">Rust JIT:</span> <span
+                            class="text-green-500">OPERATIONAL</span></li>
+                    <li class="flex justify-between"><span class="opacity-70">OAST Mesh:</span> <span
+                            class="text-green-500">ACTIVE</span></li>
+                    <li class="flex justify-between"><span class="opacity-70">Nodes Mapped:</span> <span
+                            class="text-primary font-bold">4,192</span></li>
+                </ul>
+            </div>
+
+            <div class="p-6 border border-border rounded flex flex-col items-center justify-center text-center">
+                <p class="font-mono text-[8px] uppercase tracking-widest opacity-40 mb-4">Integrity Fingerprint</p>
+                <p class="text-[9px] font-mono break-all opacity-60">{{ scan.id|stringformat:"s"|slice:":20" }}...</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

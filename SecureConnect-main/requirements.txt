@@ -1,0 +1,13 @@
+Django>=5.0
+psycopg2-binary
+celery
+redis
+playwright
+openai
+reportlab
+django-tailwind
+python-dotenv
+requests
+matplotlib
+numpy
+

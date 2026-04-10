@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Initiate Scan - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6">
+        <h1 class="font-heading text-4xl font-bold mb-2">Initiate Autonomous Scan</h1>
+        <p class="font-mono text-sm opacity-70">Deploy the Playwright + AI agent to analyze a verified asset.</p>
+    </div>
+
+    <div class="luxury-card p-10">
+        <form method="post" action="{% url 'scanner:new_scan' %}" class="space-y-8">
+            {% csrf_token %}
+
+            <div>
+                <label class="block font-mono text-xs uppercase tracking-widest text-primary mb-4 mt-8">Register Target
+                    Asset</label>
+                {% if domains %}
+                <div class="space-y-3">
+                    {% for d in domains %}
+                    <label
+                        class="flex items-center p-4 border border-[rgba(192,133,82,0.2)] rounded cursor-pointer hover:bg-[rgba(192,133,82,0.05)] transition-colors">
+                        <input type="radio" name="domain_id" value="{{ d.id }}" class="mr-4 accent-primary" required>
+                        <div>
+                            <p class="font-mono text-sm">{{ d.domain_url }}</p>
+                            <p class="font-body text-xs opacity-70 mt-1">
+                                {% if d.verification_status %}
+                                <span class="text-[#27c93f]">Verified ({{ d.verification_method }})</span>
+                                {% else %}
+                                <span class="text-[#ffbd2e]">Pending Verification</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div
+                    class="p-6 border border-dashed border-[#ffbd2e] text-[#ffbd2e] text-center font-mono text-sm rounded-lg bg-orange-500/5">
+                    <i class="fas fa-exclamation-triangle mb-2 block text-xl"></i>
+                    No assets registered. You must register and verify a domain before scanning.
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Scan Methodology Selection -->
+            <div class="space-y-6">
+                <label class="block font-mono text-xs uppercase tracking-widest text-primary mt-8 mb-4">Scan
+                    Methodology</label>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <label
+                        class="luxury-card p-5 cursor-pointer border border-primary/20 hover:bg-primary/5 transition-all text-center group">
+                        <input type="radio" name="scan_type" value="autonomous_deep" class="hidden peer" checked>
+                        <div
+                            class="peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/20 border-2 border-transparent p-4 rounded-xl">
+                            <i
+                                class="fas fa-robot text-2xl mb-3 text-primary group-hover:scale-125 transition-transform"></i>
+                            <h4 class="font-heading font-bold text-sm">Autonomous Deep</h4>
+                            <p class="text-[10px] opacity-60 font-mono mt-1">Full AI Reasoning</p>
+                        </div>
+                    </label>
+
+                    <label
+                        class="luxury-card p-5 cursor-pointer border border-primary/20 hover:bg-primary/5 transition-all text-center group">
+                        <input type="radio" name="scan_type" value="surface_recon" class="hidden peer">
+                        <div
+                            class="peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/20 border-2 border-transparent p-4 rounded-xl">
+                            <i
+                                class="fas fa-radar text-2xl mb-3 text-primary group-hover:scale-125 transition-transform"></i>
+                            <h4 class="font-heading font-bold text-sm">Surface Recon</h4>
+                            <p class="text-[10px] opacity-60 font-mono mt-1">Shadow DOM + Port Mapping</p>
+                        </div>
+                    </label>
+
+                    <label
+                        class="luxury-card p-5 cursor-pointer border border-primary/20 hover:bg-primary/5 transition-all text-center group">
+                        <input type="radio" name="scan_type" value="pii_audit" class="hidden peer">
+                        <div
+                            class="peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary/20 border-2 border-transparent p-4 rounded-xl">
+                            <i
+                                class="fas fa-fingerprint text-2xl mb-3 text-primary group-hover:scale-125 transition-transform"></i>
+                            <h4 class="font-heading font-bold text-sm">PII Breach Audit</h4>
+                            <p class="text-[10px] opacity-60 font-mono mt-1">Data Leak Detection</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-border">
+                <button type="submit"
+                    class="btn-primary px-8 py-4 font-mono uppercase tracking-widest text-sm w-full shadow-[0_0_15px_rgba(192,133,82,0.3)]"
+                    {% if not domains %}disabled{% endif %}>
+                    Deploy Autonomous Agent
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

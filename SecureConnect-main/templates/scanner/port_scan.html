@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Port Reconnaissance - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="font-heading text-4xl font-bold mb-2">Network Reconnaissance</h1>
+            <p class="font-mono text-sm opacity-70">Execute deep port scans using Kali Linux MCP infrastructure.</p>
+        </div>
+        <div class="flex space-x-4">
+            <a href="{% url 'dashboard:overview' %}"
+                class="btn-outline px-4 py-2 text-xs uppercase tracking-widest font-mono">Back to Center</a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Input Form -->
+        <div class="lg:col-span-1">
+            <div class="luxury-card p-6">
+                <form method="post" action="{% url 'scanner:port_scan' %}" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block font-mono text-xs uppercase tracking-widest text-primary mb-3">Target
+                            Asset</label>
+                        <select name="target"
+                            class="w-full bg-card border border-border text-heading p-3 rounded font-mono text-sm focus:outline-none focus:border-primary">
+                            {% for d in domains %}
+                            <option value="{{ d.domain_url }}">{{ d.domain_url }}</option>
+                            {% empty %}
+                            <option disabled>No verified assets found</option>
+                            {% endfor %}
+                            <option value="127.0.0.1">localhost (Test Loopback)</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" name="fast" id="fast" checked class="accent-primary">
+                        <label for="fast" class="font-mono text-xs uppercase tracking-wider opacity-70">Fast Scan (Top
+                            100 Ports)</label>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full btn-primary py-3 font-mono uppercase tracking-widest text-sm shadow-[0_0_15px_rgba(192,133,82,0.2)]">
+                        Launch MCP Scan
+                    </button>
+                </form>
+            </div>
+
+            <div class="mt-8 p-4 bg-[rgba(255,189,46,0.1)] border border-[rgba(255,189,46,0.2)] rounded">
+                <p class="text-[10px] font-mono uppercase text-[#ffbd2e] mb-2 font-bold"><i
+                        class="fas fa-shield-alt mr-1"></i> Legal Notice</p>
+                <p class="text-[10px] font-mono opacity-80 leading-relaxed">
+                    Access to Kali infrastructure is logged. Ensure you have explicit permission to scan the target.
+                    Unauthorized scanning is prohibited.
+                </p>
+            </div>
+        </div>
+
+        <!-- Results Display -->
+        <div class="lg:col-span-2">
+            {% if results %}
+            <div class="animated-terminal h-[500px] overflow-y-auto">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <span class="ml-4 font-mono text-[10px] opacity-50 uppercase">Scan Results: {{ results.target
+                        }}</span>
+                </div>
+                {% if results.success %}
+                <pre
+                    class="whitespace-pre-wrap text-green-400 font-mono text-xs leading-relaxed">{{ results.output }}</pre>
+                {% else %}
+                <p class="text-red-400 font-mono text-sm">Error: {{ results.message }}</p>
+                <p class="mt-4 opacity-50">{{ results.suggestion }}</p>
+                {% endif %}
+            </div>
+            {% else %}
+            <div
+                class="luxury-card p-20 flex flex-col items-center justify-center text-center opacity-40 border-dashed border-2">
+                <i class="fas fa-radar text-5xl mb-6"></i>
+                <p class="font-mono text-sm italic">Waiting for reconnaissance parameters...</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

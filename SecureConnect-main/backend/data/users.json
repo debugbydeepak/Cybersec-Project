@@ -1,0 +1,14 @@
+{
+    "admin@secureway.io": {
+        "email": "admin@secureway.io",
+        "full_name": "SECUREWAY Admin",
+        "hashed_password": "scrypt_mock_secureway123",
+        "disabled": false
+    },
+    "demo@secureway.io": {
+        "email": "demo@secureway.io",
+        "full_name": "Demo User",
+        "hashed_password": "scrypt_mock_demo123",
+        "disabled": false
+    }
+}

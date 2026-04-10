@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}Autonomous CI/CD - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="font-heading text-4xl font-bold mb-2">Self-Healing Pipeline</h1>
+            <p class="font-mono text-sm opacity-70">Automated SAST, Unit Testing, and AI-powered Auto-Fixes.</p>
+        </div>
+        <a href="{% url 'dashboard:overview' %}"
+            class="btn-outline px-4 py-2 text-xs uppercase tracking-widest font-mono">Back to Center</a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Control Panel -->
+        <div class="lg:col-span-1 space-y-6">
+            <div class="luxury-card p-6">
+                <form method="post" action="{% url 'scanner:pipeline' %}" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block font-mono text-xs uppercase tracking-widest text-[#C08552] mb-3">Repository
+                            / Target URL</label>
+                        <select name="domain_id"
+                            class="w-full bg-[rgba(192,133,82,0.05)] border border-[rgba(192,133,82,0.2)] text-heading p-3 rounded font-mono text-sm focus:outline-none focus:border-[#C08552]">
+                            {% for d in domains %}
+                            <option value="{{ d.id }}">{{ d.domain_url }}</option>
+                            {% empty %}
+                            <option disabled>No verified assets found</option>
+                            {% endfor %}
+                            <option value="internal://codebase">Local Codebase (SecureWay Core)</option>
+                        </select>
+                    </div>
+
+                    <div
+                        class="space-y-3 p-4 bg-[rgba(192,133,82,0.05)] rounded border border-dashed border-[rgba(192,133,82,0.2)]">
+                        <p class="text-[10px] font-mono uppercase text-primary">Pipeline Config:</p>
+                        <ul class="text-[10px] font-mono opacity-70 space-y-1">
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i> Bandit SAST</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i> Pytest Suite</li>
+                            <li><i class="fas fa-magic mr-2 text-[#ffbd2e]"></i> AI Auto-Fix Engine</li>
+                        </ul>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full btn-primary py-3 font-mono uppercase tracking-widest text-sm shadow-[0_0_15px_rgba(192,133,82,0.2)]">
+                        Deploy Pipeline
+                    </button>
+                </form>
+            </div>
+
+            <div
+                class="p-4 bg-[rgba(39,201,63,0.1)] border border-[rgba(39,201,63,0.2)] rounded flex items-start space-x-3">
+                <i class="fas fa-shield-check text-green-500 mt-1"></i>
+                <p class="text-[10px] font-mono text-green-400">
+                    <strong>Autonomous Rule Execution:</strong> SECUREWAY is currently executing integrated V8 DOM and
+                    Logic bypass rules.
+                </p>
+            </div>
+        </div>
+
+        <!-- Pipeline Report -->
+        <div class="lg:col-span-2">
+            {% if report %}
+            <div class="luxury-card p-8 min-h-[500px]">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="font-heading text-xl font-bold">Execution Report</h2>
+                    <span
+                        class="font-mono text-xs px-2 py-1 {% if report.status == 'SUCCESS' %}bg-green-500{% else %}bg-[#ffbd2e]{% endif %} text-white rounded">{{
+                        report.status }}</span>
+                </div>
+
+                <div class="space-y-4">
+                    {% if report.report %}
+                    {% for line in report.report %}
+                    <div
+                        class="font-mono text-xs p-3 border-l-2 {% if 'FAILED' in line or 'ERROR' in line %}border-l-red-500 bg-[rgba(255,95,86,0.05)]{% elif 'PASSED' in line %}border-l-green-500 bg-[rgba(39,201,63,0.05)]{% else %}border-l-primary bg-[rgba(192,133,82,0.05)]{% endif %}">
+                        {{ line }}
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="text-center py-20 opacity-40">
+                        <i class="fas fa-spinner fa-spin text-4xl mb-4"></i>
+                        <p class="font-mono">Processing pipeline steps...</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div
+                class="luxury-card h-full p-20 flex flex-col items-center justify-center text-center opacity-30 border-dashed border-2">
+                <i class="fas fa-conveyor-belt text-6xl mb-6"></i>
+                <p class="font-mono text-sm italic">Waiting for pipeline trigger...</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mt-12">
+        <h3 class="font-heading text-xl font-bold mb-6">Pipeline Execution History</h3>
+        <div class="luxury-card overflow-x-auto">
+            <table class="w-full text-left font-mono text-xs min-w-[600px]">
+                <thead class="bg-primary/10 opacity-70">
+                    <tr>
+                        <th class="p-4 min-w-[120px]">Run ID</th>
+                        <th class="p-4 min-w-[200px]">Target Asset</th>
+                        <th class="p-4 min-w-[100px]">Final Status</th>
+                        <th class="p-4 min-w-[150px]">Execution Date</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-border/10">
+                    {% for h in history %}
+                    <tr class="hover:bg-primary/[0.02]">
+                        <td class="p-4 text-primary font-bold">#{{ h.id|stringformat:"s"|slice:":8" }}</td>
+                        <td class="p-4 break-all">{{ h.domain.domain_url }}</td>
+                        <td class="p-4">
+                            <span
+                                class="{% if h.status == 'SUCCESS' %}text-green-500{% else %}text-red-500{% endif %} font-bold">
+                                {{ h.status }}
+                            </span>
+                        </td>
+                        <td class="p-4 opacity-70">{{ h.started_at|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="p-10 text-center opacity-30">No pipeline runs recorded in history.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

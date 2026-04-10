@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}BOLA Logic Analysis - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="font-heading text-4xl font-bold mb-2">BOLA Logic Engine</h1>
+            <p class="font-mono text-sm opacity-70">Analyze object-level authorization vulnerabilities using AI
+                Reasoning.</p>
+        </div>
+        <a href="{% url 'dashboard:overview' %}"
+            class="btn-outline px-4 py-2 text-xs uppercase tracking-widest font-mono">Back to Center</a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <!-- Analysis Input -->
+        <div class="space-y-8">
+            <div class="luxury-card p-8">
+                <form method="post" action="{% url 'scanner:analyze_bola' %}" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block font-mono text-xs uppercase tracking-widest text-primary mb-3">API
+                            Endpoint</label>
+                        <input type="text" name="endpoint" placeholder="/api/v1/user/123"
+                            class="w-full bg-card border border-border text-heading p-4 rounded font-mono text-sm focus:outline-none focus:border-primary"
+                            required>
+                        <p class="text-[10px] mt-2 opacity-60 font-mono italic">Specify the URI pattern containing
+                            object identifiers.</p>
+                    </div>
+
+                    <div>
+                        <label class="block font-mono text-xs uppercase tracking-widest text-primary mb-3">Contextual
+                            User ID</label>
+                        <input type="number" name="user_id" placeholder="456"
+                            class="w-full bg-card border border-border text-heading p-4 rounded font-mono text-sm focus:outline-none focus:border-primary"
+                            required>
+                        <p class="text-[10px] mt-2 opacity-60 font-mono italic">The user context attempting to access
+                            the resource.</p>
+                    </div>
+
+                    <!-- Reasoning Strategy Strategy -->
+                    <div class="space-y-4">
+                        <label class="block font-mono text-xs uppercase tracking-widest text-primary mb-3">Reasoning
+                            Strategy</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="strategy" value="fast" class="hidden peer" checked>
+                                <div
+                                    class="p-3 border border-border rounded text-center font-mono text-[10px] uppercase tracking-widest peer-checked:bg-primary peer-checked:text-white transition-all">
+                                    Fast Correlation
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="strategy" value="cognitive" class="hidden peer">
+                                <div
+                                    class="p-3 border border-border rounded text-center font-mono text-[10px] uppercase tracking-widest peer-checked:bg-primary peer-checked:text-white transition-all">
+                                    Deep Cognitive
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full btn-primary py-4 font-mono uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(192,133,82,0.3)]">
+                        <i class="fas fa-brain mr-2"></i> Initialize AI Reasoning
+                    </button>
+                </form>
+            </div>
+
+            <div class="p-6 border border-primary rounded bg-[rgba(192,133,82,0.03)]">
+                <h3 class="font-heading text-lg font-bold mb-3 flex items-center text-primary">
+                    <i class="fas fa-brain mr-2"></i> How it works
+                </h3>
+                <p class="font-body text-sm leading-relaxed opacity-80">
+                    The engine uses a combination of session multiplexing and LLM analysis to determine if an endpoint
+                    fails to properly validate the object-level identity of the requester against the data owner.
+                </p>
+            </div>
+        </div>
+
+        <!-- Analysis Results -->
+        <div>
+            {% if analysis %}
+            <div class="space-y-6 animate-in fade-in slide-in-from-right duration-700">
+                <div class="luxury-card p-8 border-l-4 border-l-[#ff5f56]">
+                    <h2 class="font-heading text-2xl font-bold mb-4 text-heading">Analysis Verdict</h2>
+                    <div class="flex items-center mb-6">
+                        {% if analysis.vulnerable %}
+                        <span
+                            class="bg-[#ff5f56] text-white px-3 py-1 rounded-full text-xs font-mono uppercase">Vulnerable</span>
+                        <span
+                            class="ml-4 text-sm font-mono opacity-80 decoration-red-400 underline underline-offset-4">Confidence:
+                            {{ analysis.confidence }}%</span>
+                        {% else %}
+                        <span
+                            class="bg-[#27c93f] text-white px-3 py-1 rounded-full text-xs font-mono uppercase">Secure</span>
+                        <span class="ml-4 text-sm font-mono opacity-80">Confidence: {{ analysis.confidence }}%</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="font-mono text-xs uppercase text-primary font-bold">Reasoning</h4>
+                        <p class="font-body text-lg leading-relaxed">{{ analysis.explanation }}</p>
+
+                        {% if analysis.vulnerable %}
+                        <h4 class="font-mono text-xs uppercase text-primary font-bold mt-6">Recommended Fix</h4>
+                        <div class="bg-heading p-4 rounded font-mono text-sm text-primary/90 border border-primary/30">
+                            {{ analysis.fix_code }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div
+                class="luxury-card h-full p-20 flex flex-col items-center justify-center text-center opacity-30 border-dashed border-2">
+                <i class="fas fa-microchip text-6xl mb-6"></i>
+                <p class="font-mono text-sm">Awaiting logic parameters for AI dissection...</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

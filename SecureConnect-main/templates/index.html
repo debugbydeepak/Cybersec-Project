@@ -1,0 +1,1209 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section
+    class="min-h-[80vh] flex flex-col md:flex-row items-center justify-center px-8 max-w-7xl mx-auto py-20 relative">
+    <div class="md:w-1/2 flex flex-col items-start z-10 space-y-6">
+        <!-- Showcase Badge -->
+        <div
+            class="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full mb-8 animate-bounce shadow-sm">
+            <i class="fas fa-award text-primary text-xs"></i>
+            <span class="font-mono text-[9px] uppercase tracking-[0.2em] font-bold text-primary">Official India
+                Innovation 2026 Showcase</span>
+        </div>
+
+        <h1 class="font-heading text-5xl md:text-7xl font-bold text-heading leading-tight">
+            Autonomous <br>
+            <span class="gradient-text">Cybersecurity</span> <br>
+            For Modern Apps
+        </h1>
+        <p class="font-body text-xl opacity-80 max-w-lg leading-relaxed">
+            Automate discovering business logic vulnerabilities like BOLA, SSRF, and XSS with an autonomous agent.
+        </p>
+        <div class="pt-4 flex space-x-4">
+            <a href="{% url 'accounts:register' %}"
+                class="btn-primary px-8 py-3 text-lg font-mono tracking-wide shadow-lg">Start Scanning</a>
+            <a href="#features" class="btn-outline px-8 py-3 text-lg font-mono tracking-wide">Learn More</a>
+        </div>
+    </div>
+
+    <div class="md:w-1/2 mt-12 md:mt-0 z-10 w-full flex justify-center">
+        <!-- Enlarged Floating Animated Terminal -->
+        <div
+            class="animated-terminal w-full max-w-xl h-[350px] transform translate-y-4 hover:-translate-y-2 transition-transform duration-700 shadow-[0_25px_60px_rgba(75,46,43,0.15)] flex flex-col">
+            <div class="terminal-header flex-none">
+                <div class="terminal-dot red"></div>
+                <div class="terminal-dot yellow"></div>
+                <div class="terminal-dot green"></div>
+                <span class="ml-4 font-mono text-[10px] opacity-40 uppercase tracking-widest">Autonomous Core
+                    v4.0.2</span>
+            </div>
+            <div id="terminal-content" class="font-mono text-sm p-6 overflow-hidden flex-grow space-y-2 scrollbar-hide">
+                <p class="opacity-70">root@secureway:~$ ./init_autonomous_agent --mode=aggressive</p>
+                <div id="dynamic-terminal" class="space-y-2">
+                    <p class="text-green-400">[+] Shifting into Logic-Parsing phase...</p>
+                    <p class="text-blue-400">[*] Scanning shadow_dom components...</p>
+                    <p class="text-yellow-500">[!] Entity mismatch detected at /checkout/api/v2</p>
+                    <p class="typewriter-line text-primary">[!] Potential BOLA confirmed. Crafting IDOR payload...</p>
+                </div>
+            </div>
+            <div
+                class="terminal-footer bg-black/5 p-2 px-6 flex justify-between items-center text-[9px] font-mono opacity-40 uppercase">
+                <span>Status: Active</span>
+                <span>Latency: 12ms</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section: Sliding Signals Row (Ticker Phase) -->
+<div class="marquee-container group bg-card border-y border-primary/5 py-6">
+    <div class="marquee-content flex whitespace-nowrap gap-12 animate-marquee-fast hover:pause">
+        <!-- Set 1 -->
+        <span class="marquee-item"><i class="fas fa-terminal"></i> BOLA_FUZZ_ACTIVE</span>
+        <span class="marquee-item"><i class="fas fa-shield-alt"></i> SHADOW_DOM_MAPPING</span>
+        <span class="marquee-item"><i class="fas fa-code-branch"></i> BRANCH_LOGIC_AUDIT</span>
+        <span class="marquee-item"><i class="fas fa-brain"></i> ENGINE_PAYLOAD_GEN_v4.0</span>
+        <span class="marquee-item"><i class="fas fa-network-wired"></i> OAST_DNS_CALLBACK</span>
+        <span class="marquee-item"><i class="fas fa-key"></i> TOKEN_SECRET_ENTROPY</span>
+        <span class="marquee-item"><i class="fas fa-database"></i> SQL_INJECTION_PROBE</span>
+        <span class="marquee-item"><i class="fas fa-microchip"></i> KERNEL_INTEGRITY_CHECK</span>
+        <!-- Set 2 -->
+        <span class="marquee-item"><i class="fas fa-terminal"></i> BOLA_FUZZ_ACTIVE</span>
+        <span class="marquee-item"><i class="fas fa-shield-alt"></i> SHADOW_DOM_MAPPING</span>
+        <span class="marquee-item"><i class="fas fa-code-branch"></i> BRANCH_LOGIC_AUDIT</span>
+        <span class="marquee-item"><i class="fas fa-brain"></i> ENGINE_PAYLOAD_GEN_v4.0</span>
+        <span class="marquee-item"><i class="fas fa-network-wired"></i> OAST_DNS_CALLBACK</span>
+        <span class="marquee-item"><i class="fas fa-key"></i> TOKEN_SECRET_ENTROPY</span>
+        <span class="marquee-item"><i class="fas fa-database"></i> SQL_INJECTION_PROBE</span>
+        <span class="marquee-item"><i class="fas fa-microchip"></i> KERNEL_INTEGRITY_CHECK</span>
+        <!-- Set 3 -->
+        <span class="marquee-item"><i class="fas fa-terminal"></i> BOLA_FUZZ_ACTIVE</span>
+        <span class="marquee-item"><i class="fas fa-shield-alt"></i> SHADOW_DOM_MAPPING</span>
+        <span class="marquee-item"><i class="fas fa-code-branch"></i> BRANCH_LOGIC_AUDIT</span>
+        <span class="marquee-item"><i class="fas fa-brain"></i> ENGINE_PAYLOAD_GEN_v4.0</span>
+        <span class="marquee-item"><i class="fas fa-network-wired"></i> OAST_DNS_CALLBACK</span>
+        <span class="marquee-item"><i class="fas fa-key"></i> TOKEN_SECRET_ENTROPY</span>
+        <span class="marquee-item"><i class="fas fa-database"></i> SQL_INJECTION_PROBE</span>
+        <span class="marquee-item"><i class="fas fa-microchip"></i> KERNEL_INTEGRITY_CHECK</span>
+        <!-- Set 4 -->
+        <span class="marquee-item"><i class="fas fa-terminal"></i> BOLA_FUZZ_ACTIVE</span>
+        <span class="marquee-item"><i class="fas fa-shield-alt"></i> SHADOW_DOM_MAPPING</span>
+        <span class="marquee-item"><i class="fas fa-code-branch"></i> BRANCH_LOGIC_AUDIT</span>
+        <span class="marquee-item"><i class="fas fa-brain"></i> ENGINE_PAYLOAD_GEN_v4.0</span>
+        <span class="marquee-item"><i class="fas fa-network-wired"></i> OAST_DNS_CALLBACK</span>
+        <span class="marquee-item"><i class="fas fa-key"></i> TOKEN_SECRET_ENTROPY</span>
+        <span class="marquee-item"><i class="fas fa-database"></i> SQL_INJECTION_PROBE</span>
+        <span class="marquee-item"><i class="fas fa-microchip"></i> KERNEL_INTEGRITY_CHECK</span>
+    </div>
+</div>
+
+<div class="marquee-container border-t-0 pt-0 pb-8 bg-card border-b border-primary/5">
+    <div class="marquee-content-reverse flex whitespace-nowrap gap-12 animate-marquee-reverse hover:pause">
+        <!-- Set 1 -->
+        <span class="marquee-item"><i class="fas fa-atom"></i> NEURAL_CORRELATION_ENGINE</span>
+        <span class="marquee-item"><i class="fas fa-wave-square"></i> SIGNAL_INTERCEPT_L3</span>
+        <span class="marquee-item"><i class="fas fa-user-ghost"></i> ANONYMOUS_PROXY_INIT</span>
+        <span class="marquee-item"><i class="fas fa-lock-open"></i> PII_DATA_LEAK_WARN</span>
+        <span class="marquee-item"><i class="fas fa-code"></i> REACT_DOM_REHYDRATE</span>
+        <span class="marquee-item"><i class="fas fa-link"></i> CROSS_ORIGIN_AUDIT</span>
+        <span class="marquee-item"><i class="fas fa-robot"></i> HEURISTIC_SENSITIVITY_HIGH</span>
+        <span class="marquee-item"><i class="fas fa-satellite-dish"></i> GLOBAL_OAST_MESH_UP</span>
+        <!-- Set 2 -->
+        <span class="marquee-item"><i class="fas fa-atom"></i> NEURAL_CORRELATION_ENGINE</span>
+        <span class="marquee-item"><i class="fas fa-wave-square"></i> SIGNAL_INTERCEPT_L3</span>
+        <span class="marquee-item"><i class="fas fa-user-ghost"></i> ANONYMOUS_PROXY_INIT</span>
+        <span class="marquee-item"><i class="fas fa-lock-open"></i> PII_DATA_LEAK_WARN</span>
+        <span class="marquee-item"><i class="fas fa-code"></i> REACT_DOM_REHYDRATE</span>
+        <span class="marquee-item"><i class="fas fa-link"></i> CROSS_ORIGIN_AUDIT</span>
+        <span class="marquee-item"><i class="fas fa-robot"></i> HEURISTIC_SENSITIVITY_HIGH</span>
+        <span class="marquee-item"><i class="fas fa-satellite-dish"></i> GLOBAL_OAST_MESH_UP</span>
+        <!-- Set 3 -->
+        <span class="marquee-item"><i class="fas fa-atom"></i> NEURAL_CORRELATION_ENGINE</span>
+        <span class="marquee-item"><i class="fas fa-wave-square"></i> SIGNAL_INTERCEPT_L3</span>
+        <span class="marquee-item"><i class="fas fa-user-ghost"></i> ANONYMOUS_PROXY_INIT</span>
+        <span class="marquee-item"><i class="fas fa-lock-open"></i> PII_DATA_LEAK_WARN</span>
+        <span class="marquee-item"><i class="fas fa-code"></i> REACT_DOM_REHYDRATE</span>
+        <span class="marquee-item"><i class="fas fa-link"></i> CROSS_ORIGIN_AUDIT</span>
+        <span class="marquee-item"><i class="fas fa-robot"></i> HEURISTIC_SENSITIVITY_HIGH</span>
+        <span class="marquee-item"><i class="fas fa-satellite-dish"></i> GLOBAL_OAST_MESH_UP</span>
+        <!-- Set 4 -->
+        <span class="marquee-item"><i class="fas fa-atom"></i> NEURAL_CORRELATION_ENGINE</span>
+        <span class="marquee-item"><i class="fas fa-wave-square"></i> SIGNAL_INTERCEPT_L3</span>
+        <span class="marquee-item"><i class="fas fa-user-ghost"></i> ANONYMOUS_PROXY_INIT</span>
+        <span class="marquee-item"><i class="fas fa-lock-open"></i> PII_DATA_LEAK_WARN</span>
+        <span class="marquee-item"><i class="fas fa-code"></i> REACT_DOM_REHYDRATE</span>
+        <span class="marquee-item"><i class="fas fa-link"></i> CROSS_ORIGIN_AUDIT</span>
+        <span class="marquee-item"><i class="fas fa-robot"></i> HEURISTIC_SENSITIVITY_HIGH</span>
+        <span class="marquee-item"><i class="fas fa-satellite-dish"></i> GLOBAL_OAST_MESH_UP</span>
+    </div>
+</div>
+
+<style>
+    .marquee-container {
+        overflow: hidden;
+        width: 100%;
+        background-color: var(--card);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .animate-marquee-fast {
+        display: flex;
+        width: max-content;
+        animation: marquee-scroll 25s linear infinite;
+    }
+
+    .animate-marquee-reverse {
+        display: flex;
+        width: max-content;
+        animation: marquee-scroll-reverse 20s linear infinite;
+    }
+
+    .animate-marquee-workflow {
+        width: max-content;
+        animation: marquee-workflow-scroll 50s linear infinite;
+    }
+
+    .hover\:pause:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes marquee-scroll {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-25%);
+        }
+    }
+
+    @keyframes marquee-scroll-reverse {
+        0% {
+            transform: translateX(-25%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes marquee-workflow-scroll {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+</style>
+<div class="text-center mb-16">
+    <h2 class="font-heading text-4xl md:text-5xl font-bold text-heading mb-4">Autonomous Detection</h2>
+    <p class="font-mono text-text opacity-70">Powered by Neural Logic and Playwright</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Feature 1 -->
+    <div class="luxury-card p-10 group overflow-hidden relative">
+        <div class="z-10 relative">
+            <i class="fas fa-spider text-primary text-4xl mb-6"></i>
+            <h3 class="font-heading text-2xl font-bold text-heading mb-3">Smart Spidering</h3>
+            <p class="text-text leading-relaxed">Our Playwright-based crawler correctly renders React, Next.js, and
+                GraphQL, mimicking complex human interaction patterns.</p>
+        </div>
+        <div
+            class="absolute -bottom-12 -right-12 w-32 h-32 border-2 border-primary/10 rounded-full group-hover:scale-110 transition-transform duration-700">
+        </div>
+    </div>
+
+    <!-- Feature 2 -->
+    <div class="luxury-card p-10 group overflow-hidden relative">
+        <div class="z-10 relative">
+            <i class="fas fa-unlock-alt text-primary text-4xl mb-6"></i>
+            <h3 class="font-heading text-2xl font-bold text-heading mb-3">BOLA & BAC</h3>
+            <p class="text-text leading-relaxed">Multi-session token analysis to bypass object-level access controls
+                and uncover vertical escalation paths.</p>
+        </div>
+        <div
+            class="absolute -top-12 -right-12 w-32 h-32 border-2 border-primary/10 rounded-full group-hover:scale-110 transition-transform duration-700">
+        </div>
+    </div>
+
+    <!-- Feature 3 -->
+    <div class="luxury-card p-10 group overflow-hidden relative">
+        <div class="z-10 relative">
+            <i class="fas fa-server text-primary text-4xl mb-6"></i>
+            <h3 class="font-heading text-2xl font-bold text-heading mb-3">SSRF Callbacks</h3>
+            <p class="text-text leading-relaxed">Built-in OAST infrastructure for tracking blind Server-Side Request
+                Forgery and DNS exfiltration.</p>
+        </div>
+        <div
+            class="absolute -bottom-12 -left-12 w-32 h-32 border-2 border-primary/10 rounded-full group-hover:scale-110 transition-transform duration-700">
+        </div>
+    </div>
+
+    <!-- Feature 4 -->
+    <div class="luxury-card p-10 group overflow-hidden relative">
+        <div class="z-10 relative">
+            <i class="fas fa-brain text-primary text-4xl mb-6"></i>
+            <h3 class="font-heading text-2xl font-bold text-heading mb-3">Engine-driven Exploit Gen</h3>
+            <p class="text-text leading-relaxed">SECUREWAY L-ENGINE-powered reasoning analyzes code context to
+                construct
+                highly-tailored, zero-day payload variations.</p>
+        </div>
+        <div
+            class="absolute -top-12 -left-12 w-32 h-32 border-2 border-primary/10 rounded-full group-hover:scale-110 transition-transform duration-700">
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- Section: Live Telemetry -->
+<section class="py-24 px-8 section-alt border-y border-border/10">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="font-heading text-4xl font-bold text-heading mb-4 italic tracking-tight">Core Engine Telemetry
+            </h2>
+            <p class="opacity-60 max-w-2xl mx-auto">Continuous monitoring across all deployments. Live telemetry from
+                our autonomous engine cluster.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Metric 1 -->
+            <div class="luxury-card bg-background p-12 flex flex-col items-center text-center group">
+                <div class="relative w-32 h-32 mb-8">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="64" cy="64" r="58" stroke-width="6" fill="transparent" class="telemetry-ring-bg" />
+                        <circle cx="64" cy="64" r="58" stroke-width="6" fill="transparent" stroke-dasharray="364.4"
+                            stroke-dashoffset="91.1" class="telemetry-ring-active group-hover:stroke-primary" />
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="font-heading text-3xl font-bold text-heading">75%</span>
+                    </div>
+                </div>
+                <h4 class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Vulnerability Breakdown
+                </h4>
+                <div class="flex space-x-2 text-[9px] uppercase opacity-60">
+                    <span class="flex items-center"><i class="fas fa-circle text-primary text-[6px] mr-1"></i>
+                        Critical</span>
+                    <span class="flex items-center"><i class="fas fa-circle text-blue-800 text-[6px] mr-1"></i>
+                        High</span>
+                </div>
+            </div>
+
+            <!-- Metric 2 -->
+            <div class="luxury-card bg-background p-12 flex flex-col items-center text-center group">
+                <div class="relative w-32 h-32 mb-8">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="64" cy="64" r="58" stroke-width="6" fill="transparent" class="telemetry-ring-bg" />
+                        <circle cx="64" cy="64" r="58" stroke-width="6" fill="transparent" stroke-dasharray="364.4"
+                            stroke-dashoffset="5" class="telemetry-ring-active stroke-green-800" />
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="font-heading text-3xl font-bold text-heading">99%</span>
+                    </div>
+                </div>
+                <h4 class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Engine Uptime</h4>
+                <p class="text-[9px] opacity-40 uppercase tracking-widest">Global Ops: Stable</p>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="luxury-card bg-background p-12 flex flex-col items-center text-center group">
+                <div class="relative w-32 h-32 mb-8">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="64" cy="64" r="58" stroke-width="6" fill="transparent" class="telemetry-ring-bg" />
+                        <circle cx="64" cy="64" r="58" stroke-width="6" fill="transparent" stroke-dasharray="364.4"
+                            stroke-dashoffset="20" class="telemetry-ring-active group-hover:stroke-primary" />
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center flex-col">
+                        <span class="font-heading text-3xl font-bold text-heading">94.4%</span>
+                    </div>
+                </div>
+                <h4 class="font-mono text-[10px] uppercase tracking-[0.2em] text-primary mb-4">Scan Accuracy</h4>
+                <p class="text-[9px] opacity-40 uppercase tracking-widest">Post-L-ENGINE Integration</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Section: The Workflow Chain (Sliding Mode) -->
+<section class="py-24 overflow-hidden border-b border-border/10">
+    <div class="max-w-7xl mx-auto px-8 mb-16">
+        <div class="text-center">
+            <h2
+                class="font-heading text-4xl md:text-5xl font-bold text-heading mb-4 italic tracking-tight underline decoration-primary/20 underline-offset-8">
+                Cognitive Attack Cycle</h2>
+            <p class="font-mono text-text opacity-70">The 6-stage autonomous engine operation protocol</p>
+        </div>
+    </div>
+
+    <div class="marquee-container bg-card py-12 border-y border-primary/5">
+        <div class="flex animate-marquee-workflow gap-12 px-12 hover:pause">
+            <!-- Full Set 1 -->
+            <!-- Step 1 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-radar text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_01</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">Shadow Discovery</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Playwright engine maps every
+                    hidden DOM element and async
+                    endpoint with zero-day awareness.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-draw-polygon text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_02</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">Logic Mapping</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Building structural
+                    relationships between API routes and
+                    user entities to identify toxic logic paths.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-brain text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_03</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">Cognitive Analysis</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">SECUREWAY L-ENGINE generates
+                    tailored exploit variations
+                    for deep business logic flaws.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-satellite-dish text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_04</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">OAST Assurance</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Out-of-band protocols verify
+                    blind SSRF and DNS callbacks
+                    across our global mesh.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-vial text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_05</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">PoC Validation</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Recording cryptographic
+                    evidence of exploitation with
+                    detailed environmental flag logs.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-magic text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_06</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">Cure Synthesis</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Final patch generation and
+                    verification through autonomous
+                    self-healing agents.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Full Set 2 (Repeated for Seamless Loop) -->
+            <!-- Step 1 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-radar text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_01</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">Shadow Discovery</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Playwright engine maps every
+                    hidden DOM element and async
+                    endpoint with zero-day awareness.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-draw-polygon text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_02</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">Logic Mapping</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Building structural
+                    relationships between API routes and
+                    user entities to identify toxic logic paths.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-brain text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_03</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">Cognitive Analysis</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">SECUREWAY L-ENGINE generates
+                    tailored exploit variations
+                    for deep business logic flaws.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-satellite-dish text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_04</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">OAST Assurance</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Out-of-band protocols verify
+                    blind SSRF and DNS callbacks
+                    across our global mesh.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-vial text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_05</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">PoC Validation</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Recording cryptographic
+                    evidence of exploitation with
+                    detailed environmental flag logs.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="flex-none w-[350px] luxury-card p-8 group relative bg-background">
+                <div class="flex items-center gap-6 mb-6">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-magic text-2xl"></i>
+                    </div>
+                    <span class="font-mono text-sm opacity-20">PHASE_06</span>
+                </div>
+                <h4 class="font-heading text-xl font-bold text-heading mb-3">Cure Synthesis</h4>
+                <p class="text-sm opacity-60 leading-relaxed whitespace-normal break-words">Final patch generation and
+                    verification through autonomous
+                    self-healing agents.</p>
+                <div class="absolute -right-6 top-1/2 -translate-y-1/2 text-primary/20 hidden lg:block">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Removed redundant style block -->
+
+<!-- Section: How We Differ & Working -->
+<section class="py-24 px-8 max-w-7xl mx-auto bg-card border border-border rounded-2xl">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Left: Visualization/Graph -->
+        <div class="relative">
+            <div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full"></div>
+            <div class="relative luxury-card p-4 overflow-hidden">
+                <div class="flex justify-between items-center mb-4 border-b border-primary/10 pb-2">
+                    <span class="text-[10px] font-mono uppercase tracking-[0.2em] opacity-40">Cognitive Neural
+                        Propagation</span>
+                    <span
+                        class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.4)]"></span>
+                </div>
+                <!-- Enhanced Neural Propagation Graph -->
+                <svg viewBox="0 0 500 400" class="w-full h-auto">
+                    <defs>
+                        <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#C08552" stop-opacity="1" />
+                            <stop offset="100%" stop-color="#C08552" stop-opacity="0" />
+                        </radialGradient>
+                    </defs>
+
+                    <!-- Background Connection Lines -->
+                    <g stroke="#C08552" stroke-width="0.3" stroke-opacity="0.1" fill="none">
+                        <path d="M100 100 L150 50 L200 100 L150 150 Z" />
+                        <path d="M50 200 L100 150 L150 200 L100 250 Z" />
+                        <path d="M300 100 L350 50 L400 100 L350 150 Z" />
+                        <path d="M350 250 L400 200 L450 250 L400 300 Z" />
+                        <path d="M150 200 L350 200" stroke-dasharray="2,2" />
+                    </g>
+
+                    <!-- Flowing Signals -->
+                    <g stroke="#C08552" stroke-width="1.2" fill="none">
+                        <path d="M50 200 C 150 100, 250 300, 350 200" stroke-dasharray="15, 300">
+                            <animate attributeName="stroke-dashoffset" from="315" to="0" dur="4s"
+                                repeatCount="indefinite" />
+                        </path>
+                        <path d="M50 200 C 150 300, 250 100, 350 200" stroke-dasharray="15, 300">
+                            <animate attributeName="stroke-dashoffset" from="315" to="0" dur="6s"
+                                repeatCount="indefinite" />
+                        </path>
+                        <path d="M150 50 L250 200" stroke-dasharray="5, 200">
+                            <animate attributeName="stroke-dashoffset" from="205" to="0" dur="3.5s"
+                                repeatCount="indefinite" />
+                        </path>
+                    </g>
+
+                    <!-- Central Core Hub -->
+                    <circle cx="250" cy="200" r="18" fill="url(#nodeGlow)" opacity="0.3">
+                        <animate attributeName="r" values="16;22;16" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="250" cy="200" r="6" fill="#C08552" />
+                    <text x="250" y="235" font-family="DM Mono" font-size="8" fill="#C08552" text-anchor="middle"
+                        opacity="0.6">L-ENGINE CORE</text>
+
+                    <!-- Distributed Nodes -->
+                    <circle cx="50" cy="200" r="4" fill="#4B2E2B" opacity="0.6">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="150" cy="50" r="4" fill="#4B2E2B" opacity="0.6">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="150" cy="350" r="4" fill="#4B2E2B" opacity="0.6">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="350" cy="50" r="4" fill="#4B2E2B" opacity="0.6">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="350" cy="350" r="4" fill="#4B2E2B" opacity="0.6">
+                        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.2s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="450" cy="200" r="5" fill="#C08552" opacity="0.8">
+                        <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite" />
+                    </circle>
+                </svg>
+                <div class="mt-4 grid grid-cols-2 gap-2">
+                    <div class="bg-black/5 p-2 rounded flex flex-col items-center">
+                        <p class="text-[8px] font-mono opacity-40 uppercase tracking-widest">Logic Nodes</p>
+                        <p class="text-xl font-heading text-primary font-bold">4,192</p>
+                    </div>
+                    <div class="bg-black/5 p-2 rounded flex flex-col items-center">
+                        <p class="text-[8px] font-mono opacity-40 uppercase tracking-widest">Scan Depth</p>
+                        <p class="text-xl font-heading text-primary font-bold">L-Level 9</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Text Content -->
+        <div class="space-y-8">
+            <div>
+                <h3 class="font-heading text-3xl font-bold text-heading mb-4">How It Works</h3>
+                <p class="opacity-80 leading-relaxed">
+                    Unlike traditional scanners that rely on static regex patterns, SECUREWAY operates as a **Cognitive
+                    Security Agent**. It doesn't just look for bugs; it understands the intention of your code. By
+                    combining Playwright's headless execution with Engine-driven reasoning, it interacts with your
+                    application exactly like a human attacker—poking at business logic, attempting BOLA/IDOR
+                    escalations, and tracing SSRF callbacks in real-time.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-heading text-xl font-bold text-heading">What Makes Us Different?</h4>
+                <ul class="space-y-3 font-body">
+                    <li class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-primary mt-1"></i>
+                        <span><strong>Zero-Knowledge Discovery:</strong> We map complex Shadow DOM and SPAs that other
+                            tools simply can't see.</span>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-primary mt-1"></i>
+                        <span><strong>Contextual Intelligence:</strong> Our Engine understands that `/api/user/10` and
+                            `/api/user/11` are related entities, automatically testing for IDOR.</span>
+                    </li>
+                    <li class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-primary mt-1"></i>
+                        <span><strong>Self-Healing Output:</strong> We don't just give you a PDF report; we provide the
+                            exact line-of-code fix to secure the vulnerability.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section: Competitive Comparison -->
+<section class="py-24 px-8 section-alt border-y border-border/10">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="font-heading text-4xl font-bold text-heading mb-4 italic">Why SecureWay Is Different</h2>
+            <p class="opacity-60 max-w-2xl mx-auto italic">Traditional scanners find problems. SecureWay finds them,
+                predicts the next one, and fixes the system autonomously.</p>
+        </div>
+
+        <div class="luxury-card bg-background overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead>
+                        <tr class="border-b border-border bg-black/[0.02]">
+                            <th class="p-8 font-mono text-[10px] uppercase tracking-widest opacity-60">Capability</th>
+                            <th class="p-8 font-mono text-[10px] uppercase tracking-widest text-primary font-bold">
+                                SecureWay</th>
+                            <th class="p-8 font-mono text-[10px] uppercase tracking-widest opacity-40">Acunetix</th>
+                            <th class="p-8 font-mono text-[10px] uppercase tracking-widest opacity-40">Burp Suite</th>
+                            <th class="p-8 font-mono text-[10px] uppercase tracking-widest opacity-40">OWASP ZAP</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border/20">
+                        <tr class="hover:bg-primary/[0.02] transition-colors">
+                            <td class="p-8 font-bold text-heading">Headless JS Rendering</td>
+                            <td class="p-8"><i class="fas fa-check-circle text-green-700 text-lg"></i></td>
+                            <td class="p-8"><i class="fas fa-check-circle text-green-700/40"></i></td>
+                            <td class="p-8"><i class="fas fa-minus-circle text-orange-400 opacity-40"></i></td>
+                            <td class="p-8"><i class="fas fa-times-circle text-red-700 opacity-40"></i></td>
+                        </tr>
+                        <tr class="hover:bg-primary/[0.02] transition-colors">
+                            <td class="p-8 font-bold text-heading">Autonomous Self-Healing (Cure Agent)</td>
+                            <td class="p-8"><i class="fas fa-check-circle text-green-700 text-lg"></i></td>
+                            <td class="p-8"><i class="fas fa-times-circle text-red-700 opacity-40"></i></td>
+                            <td class="p-8"><i class="fas fa-times-circle text-red-700 opacity-40"></i></td>
+                            <td class="p-8"><i class="fas fa-times-circle text-red-700 opacity-40"></i></td>
+                        </tr>
+                        <tr class="hover:bg-primary/[0.02] transition-colors">
+                            <td class="p-8 font-bold text-heading">Predictive Crash Prevention</td>
+                            <td class="p-8"><i class="fas fa-check-circle text-green-700 text-lg"></i></td>
+                            <td class="p-8"><i class="fas fa-times-circle text-red-700 opacity-40"></i></td>
+                            <td class="p-8"><i class="fas fa-times-circle text-red-700 opacity-40"></i></td>
+                            <td class="p-8"><i class="fas fa-times-circle text-red-700 opacity-40"></i></td>
+                        </tr>
+                        <tr class="hover:bg-primary/[0.02] transition-colors">
+                            <td class="p-8 font-bold text-heading">Custom Plugin System</td>
+                            <td class="p-8"><i class="fas fa-check-circle text-green-700 text-lg"></i></td>
+                            <td class="p-8"><i class="fas fa-times-circle text-red-700 opacity-40"></i></td>
+                            <td class="p-8"><i class="fas fa-check-circle text-green-700/40"></i></td>
+                            <td class="p-8"><i class="fas fa-check-circle text-green-700/40"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section: Tech Stack Icons -->
+<section class="py-24 px-8 border-b border-border">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16">
+        <div class="md:w-1/3">
+            <h2 class="font-heading text-4xl font-bold text-heading mb-6 tracking-tight">Fueled by Intelligence</h2>
+            <p class="opacity-80 text-lg">Our engine is built on the world's most robust tech stack, ensuring high-speed
+                logic parsing and secure execution.</p>
+        </div>
+        <div class="md:w-2/3 grid grid-cols-2 lg:grid-cols-4 gap-12">
+            <div class="flex flex-col items-center group tech-icon-card p-4 rounded-xl">
+                <div
+                    class="w-24 h-24 rounded-2xl bg-card border border-border flex items-center justify-center text-primary group-hover:text-background transition-all duration-500 mb-4 shadow-xl">
+                    <i class="fab fa-python text-4xl"></i>
+                </div>
+                <span class="font-mono text-[10px] uppercase opacity-40 tracking-[0.2em] font-bold">Python v3.12</span>
+            </div>
+            <div class="flex flex-col items-center group tech-icon-card p-4 rounded-xl">
+                <div
+                    class="w-24 h-24 rounded-2xl bg-card border border-border flex items-center justify-center text-primary group-hover:text-background transition-all duration-500 mb-4 shadow-xl">
+                    <i class="fas fa-bolt text-4xl"></i>
+                </div>
+                <span class="font-mono text-[10px] uppercase opacity-40 tracking-[0.2em] font-bold">FASTAPI v109</span>
+            </div>
+            <div class="flex flex-col items-center group tech-icon-card p-4 rounded-xl">
+                <div
+                    class="w-24 h-24 rounded-2xl bg-card border border-border flex items-center justify-center text-primary group-hover:text-background transition-all duration-500 mb-4 shadow-xl">
+                    <i class="fas fa-brain text-4xl"></i>
+                </div>
+                <span class="font-mono text-[10px] uppercase opacity-40 tracking-[0.2em] font-bold">Neural Logic</span>
+            </div>
+            <div class="flex flex-col items-center group tech-icon-card p-4 rounded-xl">
+                <div
+                    class="w-24 h-24 rounded-2xl bg-card border border-border flex items-center justify-center text-primary group-hover:text-background transition-all duration-500 mb-4 shadow-xl">
+                    <i class="fas fa-microchip text-4xl"></i>
+                </div>
+                <span class="font-mono text-[10px] uppercase opacity-40 tracking-[0.2em] font-bold">Distributed
+                    OAST</span>
+            </div>
+        </div>
+    </div>
+    <!-- Section: Technical Deep-Dive (Sliding Mode) -->
+    <section class="py-24 border-t border-border/10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-8 mb-16">
+            <div class="text-center">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-heading mb-6 tracking-tight">The
+                    Architecture of Trust</h2>
+                <p class="opacity-60 max-w-2xl mx-auto">Deep-dive into how our autonomous agent maintains constant
+                    vigilance over your codebase.</p>
+            </div>
+        </div>
+
+        <div class="marquee-container bg-primary/[0.02] py-12 border-y border-primary/5">
+            <div class="flex animate-marquee-workflow gap-12 px-12 hover:pause">
+                <!-- Cycle 1 -->
+                <!-- Part 1 -->
+                <div class="flex-none w-[450px] luxury-card p-10 group bg-background">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-plug text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-heading mb-4">Programmable Plugins</h3>
+                    <p class="text-text leading-relaxed whitespace-normal break-words">Our engine uses a
+                        <strong>YAML-centric plugin
+                            architecture</strong>. You can define custom security checks, payload variations, and
+                        success criteria in simple declarations. The agent then dynamically compiles these into active
+                        scanning threads.
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-primary/10">
+                        <span class="font-mono text-[10px] uppercase opacity-40">Tech: Python Dynamic Loading</span>
+                    </div>
+                </div>
+
+                <!-- Part 2 -->
+                <div class="flex-none w-[450px] luxury-card p-10 group bg-primary/[0.02]">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-project-diagram text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-heading mb-4">Multi-Vector Analysis</h3>
+                    <p class="text-text leading-relaxed whitespace-normal break-words">We don't just scan; we correlate.
+                        Our engine performs
+                        <strong>Pattern Analysis</strong> by linking DOM changes, network responses, and server-side
+                        latency. This creates a behavior profile that identifies exploits impossible to find with regex
+                        alone.
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-primary/10">
+                        <span class="font-mono text-[10px] uppercase opacity-40">Tech: Neural Logic Correlation</span>
+                    </div>
+                </div>
+
+                <!-- Part 3 -->
+                <div class="flex-none w-[450px] luxury-card p-10 group bg-background">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-user-shield text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-heading mb-4">Autonomous Assurance</h3>
+                    <p class="text-text leading-relaxed whitespace-normal break-words">Your code is secured by a
+                        <strong>Closed-Loop Defense</strong>.
+                        When a vulnerability is found, our Cure Agent immediately generates a mitigation patch and
+                        verifies it against the exploit, ensuring zero false positives and instant remediation.
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-primary/10">
+                        <span class="font-mono text-[10px] uppercase opacity-40">Outcome: Instant Self-Healing</span>
+                    </div>
+                </div>
+
+                <!-- Cycle 2 (Repeat for Seamless Loop) -->
+                <!-- Part 1 -->
+                <div class="flex-none w-[450px] luxury-card p-10 group bg-background">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-plug text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-heading mb-4">Programmable Plugins</h3>
+                    <p class="text-text leading-relaxed whitespace-normal break-words">Our engine uses a
+                        <strong>YAML-centric plugin
+                            architecture</strong>. You can define custom security checks, payload variations, and
+                        success criteria in simple declarations. The agent then dynamically compiles these into active
+                        scanning threads.
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-primary/10">
+                        <span class="font-mono text-[10px] uppercase opacity-40">Tech: Python Dynamic Loading</span>
+                    </div>
+                </div>
+
+                <!-- Part 2 -->
+                <div class="flex-none w-[450px] luxury-card p-10 group bg-primary/[0.02]">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-project-diagram text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-heading mb-4">Multi-Vector Analysis</h3>
+                    <p class="text-text leading-relaxed whitespace-normal break-words">We don't just scan; we correlate.
+                        Our engine performs
+                        <strong>Pattern Analysis</strong> by linking DOM changes, network responses, and server-side
+                        latency. This creates a behavior profile that identifies exploits impossible to find with regex
+                        alone.
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-primary/10">
+                        <span class="font-mono text-[10px] uppercase opacity-40">Tech: Neural Logic Correlation</span>
+                    </div>
+                </div>
+
+                <!-- Part 3 -->
+                <div class="flex-none w-[450px] luxury-card p-10 group bg-background">
+                    <div
+                        class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-background transition-all duration-500">
+                        <i class="fas fa-user-shield text-2xl"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-heading mb-4">Autonomous Assurance</h3>
+                    <p class="text-text leading-relaxed">Your code is secured by a <strong>Closed-Loop Defense</strong>.
+                        When a vulnerability is found, our Cure Agent immediately generates a mitigation patch and
+                        verifies it against the exploit, ensuring zero false positives and instant remediation.</p>
+                    <div class="mt-6 pt-6 border-t border-primary/10">
+                        <span class="font-mono text-[10px] uppercase opacity-40">Outcome: Instant Self-Healing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section: Luxury Pricing -->
+    <section id="pricing" class="py-24 px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2
+                class="font-heading text-4xl md:text-5xl font-bold text-heading mb-4 italic tracking-tight underline decoration-primary/20 underline-offset-8">
+                Flexible Security Coverage</h2>
+            <p class="font-mono text-text opacity-70 italic tracking-widest text-sm">Pricing tiered for excellence</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Plan 1: Sentinel (Free) -->
+            <div class="luxury-card p-10 flex flex-col justify-between border-opacity-40 bg-white/5">
+                <div>
+                    <h4 class="font-mono text-[10px] uppercase tracking-[0.4em] text-primary mb-4">Sentinel</h4>
+                    <div class="mb-6">
+                        <span class="text-3xl font-heading text-heading">₹</span>
+                        <span class="text-6xl font-heading font-bold text-heading">0</span>
+                        <span class="opacity-50 text-sm">/mo</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-sm opacity-80">
+                        <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> 1
+                            Domain Verification</li>
+                        <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i>
+                            Strategic Engine Reasoning</li>
+                        <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i>
+                            Community Support</li>
+                    </ul>
+                </div>
+                <a href="{% url 'accounts:register' %}"
+                    class="btn-outline text-center py-3 uppercase text-[10px] tracking-[0.2em] font-bold">Start Free</a>
+            </div>
+
+            <!-- Plan 2: Sovereign (Normal/Popular) -->
+            <div
+                class="luxury-card p-10 flex flex-col justify-between border-primary bg-primary/[0.04] transform md:scale-105 shadow-2xl relative">
+                <div
+                    class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-background px-4 py-1 text-[10px] uppercase tracking-widest rounded-full">
+                    Most Popular</div>
+                <div>
+                    <h4 class="font-mono text-[10px] uppercase tracking-[0.4em] text-primary mb-4">Sovereign</h4>
+                    <div class="mb-6">
+                        <span class="text-3xl font-heading text-heading">₹</span>
+                        <span class="text-6xl font-heading font-bold text-heading">4,999</span>
+                        <span class="opacity-50 text-sm">/mo</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-sm">
+                        <li class="flex items-center font-bold text-heading text-base"><i
+                                class="fas fa-check text-primary mr-3 text-[10px]"></i> 10 Active Domains</li>
+                        <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> Full
+                            Autonomous Logic</li>
+                        <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> CI/CD
+                            Native Agent</li>
+                        <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i>
+                            Priority Engine Reasoning</li>
+                    </ul>
+                </div>
+                <a href="{% url 'accounts:register' %}"
+                    class="btn-primary text-center py-4 uppercase text-[10px] tracking-[0.3em] font-bold shadow-lg">Upgrade
+                    Now</a>
+            </div>
+
+            <!-- Plan 3: Vanguard (Custom) -->
+            <div class="luxury-card p-10 flex flex-col justify-between border-opacity-40">
+                <div>
+                    <h4 class="font-mono text-[10px] uppercase tracking-[0.4em] text-primary mb-4">Vanguard</h4>
+                    <div class="mb-6">
+                        <span
+                            class="text-2xl font-heading text-heading uppercase font-bold tracking-widest">Custom</span>
+                    </div>
+                    <p class="text-sm opacity-60 mb-8 italic">Tailored for enterprise-grade autonomous security
+                        orchestration and massive infrastructure.</p>
+                    <ul class="space-y-4 mb-8 text-sm opacity-80">
+                        <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i>
+                            On-Premise Models</li>
+                        <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> 24/7
+                            Red-Teaming</li>
+                        <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i>
+                            Dedicated CSO Liaison</li>
+                    </ul>
+                </div>
+                <a href="#"
+                    class="btn-outline text-center py-3 uppercase text-[10px] tracking-[0.2em] font-bold">Contact
+                    Expert</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- High-Tech Dynamic Call to Action (Condensed & Attractive) -->
+    <section
+        class="py-28 px-8 text-center bg-[#1A0F0D] text-[#F9F3ED] relative overflow-hidden group border-t border-primary/10">
+        <!-- SVG Geometric Background Pattern (Higher Definition) -->
+        <div class="absolute inset-0 opacity-15 pointer-events-none">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid-pattern-cta" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C08552" stroke-width="0.3" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid-pattern-cta)" />
+            </svg>
+        </div>
+
+        <!-- Localized Pulsing Glow -->
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,_rgba(192,133,82,0.08)_0%,_transparent_70%)] animate-pulse pointer-events-none">
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto">
+            <!-- Glass Terminal Frame -->
+            <div
+                class="bg-black/20 backdrop-blur-sm border border-primary/10 rounded-3xl p-12 md:p-20 shadow-2xl relative overflow-hidden">
+                <!-- Corner Accents -->
+                <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/30 rounded-tl-3xl"></div>
+                <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary/30 rounded-tr-3xl">
+                </div>
+                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary/30 rounded-bl-3xl">
+                </div>
+                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/30 rounded-br-3xl">
+                </div>
+
+                <div class="inline-block mb-6 px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full">
+                    <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-primary">System Dispatch
+                        Ready</span>
+                </div>
+
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-8 tracking-tight">Deploy the <span
+                        class="text-primary italic">Logic Engine</span></h2>
+
+                <p class="mb-12 max-w-2xl mx-auto opacity-70 text-base leading-relaxed font-body">
+                    Activate the world's most advanced autonomous security orchestration. Secure your shadow DOM and
+                    business logic with proprietary Neural-Logic today.
+                </p>
+
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                    <a href="{% url 'accounts:register' %}"
+                        class="group relative overflow-hidden px-10 py-5 bg-primary text-[#1A0F0D] font-mono uppercase tracking-widest text-xs transition-all hover:scale-105 active:scale-95 shadow-[0_15px_40px_rgba(192,133,82,0.25)] rounded-sm">
+                        <!-- Button Scan Effect -->
+                        <div
+                            class="absolute inset-x-0 top-0 h-[2px] bg-white/50 animate-[scan_3s_infinite] shadow-[0_0_15px_#fff]">
+                        </div>
+                        <span class="relative z-10 font-bold">Initialize System Protocol</span>
+                    </a>
+                    <a href="{% url 'core:docs' %}"
+                        class="font-mono text-[10px] uppercase tracking-widest opacity-50 hover:opacity-100 hover:text-primary transition-all flex items-center group">
+                        View Logic Specs <i
+                            class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Enhanced Plan Descriptors -->
+                <div class="mt-16 flex flex-wrap justify-center gap-12 border-t border-primary/10 pt-10">
+                    <div class="text-center group-hover:translate-y-[-2px] transition-transform duration-500">
+                        <p class="font-mono text-[8px] uppercase tracking-[0.4em] mb-2 text-primary opacity-60">
+                            Infrastructure Entry</p>
+                        <p class="text-[10px] font-bold font-heading uppercase tracking-[0.2em]">Sentinel (Simple)</p>
+                    </div>
+                    <div class="h-8 w-[1px] bg-primary/10 hidden md:block self-center"></div>
+                    <div class="text-center group-hover:translate-y-[-2px] transition-transform duration-500">
+                        <p class="font-mono text-[8px] uppercase tracking-[0.4em] mb-2 text-primary opacity-60">
+                            Autonomous
+                            Standard</p>
+                        <p class="text-[10px] font-bold font-heading uppercase tracking-[0.2em]">Sovereign (Normal)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Floating Signals -->
+        <div
+            class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-10">
+        </div>
+    </section>
+
+    <!-- Scanning Animation Style -->
+    <style>
+        @keyframes scan {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(300%);
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <!-- Add basic canvas particle effect -->
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = '#C08552';
+                ctx.globalAlpha = 0.15;
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 18000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 0.4) - 0.2;
+                let directionY = (Math.random() * 0.4) - 0.2;
+                let color = '#C08552';
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+        }
+        init();
+        animate();
+
+        window.addEventListener('resize',
+            function () {
+                canvas.width = innerWidth;
+                canvas.height = innerHeight;
+                init();
+            }
+        );
+
+        // Dynamic Terminal Simulation
+        const terminalLines = [
+            "<span class='text-blue-400'>[*]</span> Crawling target: https://app.target-internal.com",
+            "<span class='text-green-400'>[+]</span> Mapped 142 API endpoints via Shadow DOM parsing.",
+            "<span class='text-yellow-500'>[!]</span> Found hidden parameter: <span class='underline'>?debug_user_id=102</span>",
+            "<span class='text-primary'>[+]</span> Testing BOLA with multi-session tokens...",
+            "<span class='text-red-400 font-bold'>[CRITICAL]</span> Unauthorized data access confirmed.",
+            "<span class='text-green-400'>[+]</span> Generating line-of-code patch to Middleware.py...",
+            "<span class='opacity-50 italic'>// Engine Reasoning: Suggested decorator @ensure_owner_access</span>"
+        ];
+
+        const dynamicTerminal = document.getElementById('dynamic-terminal');
+        let lineIndex = 0;
+
+        function addTerminalLine() {
+            if (lineIndex >= terminalLines.length) {
+                dynamicTerminal.innerHTML = "";
+                lineIndex = 0;
+            }
+            const p = document.createElement('p');
+            p.className = "text-xs italic";
+            p.innerHTML = terminalLines[lineIndex];
+            dynamicTerminal.appendChild(p);
+
+            // Auto scroll
+            const container = document.getElementById('terminal-content');
+            container.scrollTop = container.scrollHeight;
+
+            lineIndex++;
+            setTimeout(addTerminalLine, Math.random() * 1000 + 1000);
+        }
+
+        setTimeout(addTerminalLine, 2000);
+    </script>
+    {% endblock %}

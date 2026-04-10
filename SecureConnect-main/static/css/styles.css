@@ -1,0 +1,339 @@
+/* Custom CSS for SECUREWAY */
+
+.glass-navbar {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--background);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(192, 133, 82, 0.3);
+}
+
+.btn-outline {
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    cursor: pointer;
+    background: transparent;
+}
+
+.btn-outline:hover {
+    background-color: rgba(192, 133, 82, 0.1);
+    transform: translateY(-2px);
+}
+
+.luxury-card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.luxury-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(192, 133, 82, 0.1);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--heading) 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Glitch Effect */
+.glitch-text {
+    position: relative;
+    display: inline-block;
+}
+
+.glitch-text:hover::before,
+.glitch-text:hover::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+}
+
+.glitch-text:hover::before {
+    left: 2px;
+    text-shadow: -1px 0 var(--primary);
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim 2s infinite linear alternate-reverse;
+}
+
+.glitch-text:hover::after {
+    left: -2px;
+    text-shadow: -1px 0 var(--heading);
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(22px, 9999px, 86px, 0);
+    }
+
+    10% {
+        clip: rect(6px, 9999px, 86px, 0);
+    }
+
+    20% {
+        clip: rect(32px, 9999px, 97px, 0);
+    }
+
+    30% {
+        clip: rect(110px, 9999px, 19px, 0);
+    }
+
+    40% {
+        clip: rect(6px, 9999px, 19px, 0);
+    }
+
+    50% {
+        clip: rect(17px, 9999px, 81px, 0);
+    }
+
+    60% {
+        clip: rect(22px, 9999px, 13px, 0);
+    }
+
+    70% {
+        clip: rect(4px, 9999px, 11px, 0);
+    }
+
+    80% {
+        clip: rect(66px, 9999px, 39px, 0);
+    }
+
+    90% {
+        clip: rect(28px, 9999px, 20px, 0);
+    }
+
+    100% {
+        clip: rect(13px, 9999px, 7px, 0);
+    }
+}
+
+/* Terminal Animation */
+.animated-terminal {
+    font-family: 'DM Mono', monospace;
+    background-color: var(--heading);
+    opacity: 0.95;
+    color: var(--primary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    font-size: 0.875rem;
+}
+
+.terminal-header {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.terminal-dot.red {
+    background-color: #ff5f56;
+}
+
+.terminal-dot.yellow {
+    background-color: #ffbd2e;
+}
+
+.terminal-dot.green {
+    background-color: #27c93f;
+}
+
+.typewriter-line {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: .15em solid var(--primary);
+    animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
+    max-width: fit-content;
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: var(--primary);
+    }
+}
+
+/* Organizational Utilities */
+.section-alt {
+    background-color: var(--card);
+}
+
+.telemetry-ring-bg {
+    stroke: var(--border);
+}
+
+.telemetry-ring-active {
+    stroke: var(--primary);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.workflow-bridge {
+    position: relative;
+}
+
+.workflow-bridge::after {
+    content: '';
+    position: absolute;
+    right: -2rem;
+    top: 50%;
+    width: 2rem;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
+    opacity: 0.3;
+    animation: flow-right 3s infinite linear;
+}
+
+@keyframes flow-right {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+}
+
+.tech-icon-card {
+    transition: all 0.5s ease;
+}
+
+.tech-icon-card:hover {
+    background-color: var(--primary);
+    color: var(--background);
+    transform: scale(1.1) rotate(2deg);
+}
+
+/* Sliding Row Marquee */
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: 2rem 0;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee-scroll 40s linear infinite;
+}
+
+.marquee-item {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    color: var(--heading);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.marquee-item:hover {
+    opacity: 1;
+}
+
+.marquee-item i {
+    font-size: 0.65rem;
+    margin-right: 0.75rem;
+    color: var(--primary);
+}
+
+@keyframes marquee-scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marquee-scroll-reverse {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.marquee-content-reverse {
+    display: inline-block;
+    animation: marquee-scroll-reverse 45s linear infinite;
+}
+
+/* Sidebar Hide Scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Active Nav State */
+.active-nav {
+    background-color: var(--card) !important;
+    color: var(--text) !important;
+}

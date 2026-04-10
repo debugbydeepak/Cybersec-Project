@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Anomaly Detection - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="font-heading text-4xl font-bold mb-2">Traffic Anomaly Detection</h1>
+            <p class="font-mono text-sm opacity-70">Real-time Outlier Analysis via PyOD Isolation Forest.</p>
+        </div>
+        <a href="{% url 'dashboard:overview' %}"
+            class="btn-outline px-4 py-2 text-xs uppercase tracking-widest font-mono">Back to Center</a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Control Panel -->
+        <div class="lg:col-span-1 space-y-6">
+            <div class="luxury-card p-6">
+                <form method="post" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block font-mono text-xs uppercase tracking-widest text-[#C08552] mb-3">Asset to
+                            Analyze</label>
+                        <select name="domain_id"
+                            class="w-full bg-[rgba(192,133,82,0.05)] border border-[rgba(192,133,82,0.2)] text-heading p-3 rounded font-mono text-sm focus:outline-none focus:border-[#C08552]">
+                            {% for d in domains %}
+                            <option value="{{ d.id }}">{{ d.domain_url }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit"
+                        class="w-full btn-primary py-3 font-mono uppercase tracking-widest text-sm shadow-[0_0_15px_rgba(192,133,82,0.2)]">
+                        Deep Pattern Analysis
+                    </button>
+                </form>
+            </div>
+
+            <div class="luxury-card p-10 flex flex-col items-center justify-center text-center">
+                <p class="font-mono text-[10px] uppercase opacity-50 mb-4">Latest Crash Risk</p>
+                <div class="relative">
+                    <svg class="w-32 h-32 transform -rotate-90">
+                        <circle cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent"
+                            class="text-border" />
+                        <circle cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent"
+                            class="text-primary" stroke-dasharray="364"
+                            stroke-dashoffset="{{ results.offset|default:200 }}" />
+                    </svg>
+                    <span
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-heading text-xl font-bold">{{ results.score|default:'0.00' }}</span>
+                </div>
+                <p
+                    class="mt-6 font-mono text-[10px] text-[#ffbd2e] {% if results.is_outlier %}animate-pulse{% endif %}">
+                    {% if results.is_outlier %}ANOMALOUS ACTIVITY DETECTED{% else %}SYSTEM STATUS: NOMINAL{% endif %}
+                </p>
+            </div>
+        </div>
+
+        <!-- Detection History -->
+        <div class="lg:col-span-3 luxury-card p-8">
+            <h3 class="font-heading text-xl font-bold mb-6">Recent Outliers & Predictive History</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left font-mono text-xs">
+                    <thead class="bg-[rgba(192,133,82,0.1)] opacity-70">
+                        <tr>
+                            <th class="p-4 uppercase tracking-tighter">Timestamp</th>
+                            <th class="p-4 uppercase tracking-tighter">Asset</th>
+                            <th class="p-4 uppercase tracking-tighter">Anomaly Score</th>
+                            <th class="p-4 uppercase tracking-tighter">Crash Prob.</th>
+                            <th class="p-4 uppercase tracking-tighter">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border">
+                        {% for h in history %}
+                        <tr class="hover:bg-[rgba(192,133,82,0.05)] border-b border-border/10">
+                            <td class="p-4 whitespace-nowrap">{{ h.identified_at|date:"Y-m-d H:i" }}</td>
+                            <td class="p-4 break-all max-w-[200px]">{{ h.domain.domain_url }}</td>
+                            <td class="p-4 text-center">{{ h.prediction_score }}</td>
+                            <td class="p-4 text-center">{{ h.crash_probability|floatformat:4 }}</td>
+                            <td class="p-4 text-right">
+                                <span
+                                    class="{% if h.is_anomaly %}text-red-500{% else %}text-green-500{% endif %} font-bold uppercase">
+                                    {% if h.is_anomaly %}Anomaly{% else %}Nominal{% endif %}
+                                </span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="p-20 text-center opacity-30">No historical patterns indexed yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

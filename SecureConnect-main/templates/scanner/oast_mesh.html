@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}OAST Mesh Monitor - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="font-heading text-4xl font-bold mb-2">Global OAST Callback Mesh</h1>
+            <p class="font-mono text-sm opacity-70 uppercase tracking-widest">Blind Interaction Telemetry</p>
+        </div>
+        <a href="{% url 'dashboard:overview' %}" class="btn-outline px-4 py-2 text-xs uppercase font-mono">Back to
+            Center</a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Listener Status -->
+        <div class="lg:col-span-1 space-y-6">
+            <div class="luxury-card p-6">
+                <h3 class="font-heading font-bold mb-4 uppercase text-xs tracking-widest opacity-70">Mesh Listeners</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between font-mono text-[10px]">
+                        <span class="flex items-center"><i class="fas fa-globe mr-2 text-primary"></i> DNS</span>
+                        <span class="text-green-500 font-bold uppercase">Polling</span>
+                    </div>
+                    <div class="flex items-center justify-between font-mono text-[10px]">
+                        <span class="flex items-center"><i class="fas fa-server mr-2 text-primary"></i> HTTP/S</span>
+                        <span class="text-green-500 font-bold uppercase">Polling</span>
+                    </div>
+                    <div class="flex items-center justify-between font-mono text-[10px]">
+                        <span class="flex items-center"><i class="fas fa-project-diagram mr-2 text-primary"></i>
+                            LDAP</span>
+                        <span class="text-green-500 font-bold uppercase">Polling</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="padding-card bg-black border border-primary p-6 rounded text-center">
+                <p class="font-mono text-[10px] text-primary uppercase mb-2">Hit Accumulation</p>
+                <h2 class="text-4xl font-heading font-bold text-white tracking-tighter">0.02%</h2>
+                <p class="text-[9px] font-mono opacity-50 mt-1 uppercase">Interaction Latency: 1.2ms</p>
+            </div>
+        </div>
+
+        <!-- Callback Feed -->
+        <div class="lg:col-span-3">
+            <h2 class="font-heading text-xl font-bold mb-6 flex items-center">
+                <i class="fas fa-wave-square mr-3 text-primary"></i> Active Interactions
+            </h2>
+
+            <div class="space-y-4">
+                {% if callbacks.callbacks %}
+                {% for cb in callbacks.callbacks %}
+                <div
+                    class="luxury-card p-5 border-l-2 border-l-primary flex justify-between items-center group hover:bg-[rgba(192,133,82,0.02)] transition-colors">
+                    <div class="flex items-center space-x-6">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[rgba(192,133,82,0.1)] flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <i class="fas fa-{% if cb.type == 'DNS' %}globe{% else %}server{% endif %}"></i>
+                        </div>
+                        <div>
+                            <p class="font-mono text-sm font-bold">{{ cb.type }} Callback Detected</p>
+                            <p class="font-mono text-[10px] opacity-70">Source IP: {{ cb.source_ip }}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-mono text-[10px] opacity-50 uppercase">Timestamp</p>
+                        <p class="font-mono text-xs font-bold">{{ cb.time|floatformat:0 }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="luxury-card p-20 text-center opacity-30">
+                    <i class="fas fa-ear text-5xl mb-4"></i>
+                    <p class="font-mono">Listening for OAST callbacks... (No interactions yet)</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

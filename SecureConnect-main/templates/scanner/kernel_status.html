@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Expert Kernel Status - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="font-heading text-4xl font-bold mb-2">Security Kernel Telemetry</h1>
+            <p class="font-mono text-sm opacity-70 uppercase tracking-widest">Low-Level Machine Dispatch</p>
+        </div>
+        <a href="{% url 'dashboard:overview' %}" class="btn-outline px-4 py-2 text-xs uppercase font-mono">Back to
+            Center</a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Rust Engine Health -->
+        <div class="luxury-card p-8 border-t-4 border-t-primary">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 class="font-heading text-2xl font-bold">Packet Engine (Rust)</h2>
+                    <p class="font-mono text-[10px] opacity-50 uppercase mt-1">JIT-Optimized Matching</p>
+                </div>
+                <div class="animate-pulse flex items-center text-green-500 font-mono text-[10px] uppercase">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> OPERATIONAL
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="bg-card p-4 rounded text-center">
+                    <p class="text-[9px] uppercase font-mono opacity-50 mb-1">JIT Latency</p>
+                    <p class="text-xl font-heading font-bold text-primary">{{ health.rust_engine.jit_latency_ms }}ms</p>
+                </div>
+                <div class="bg-card p-4 rounded text-center">
+                    <p class="text-[9px] uppercase font-mono opacity-50 mb-1">System Load</p>
+                    <p class="text-xl font-heading font-bold text-primary uppercase">{{ health.rust_engine.load }}</p>
+                </div>
+            </div>
+
+            <div class="bg-heading p-4 rounded font-mono text-[10px] text-primary/80 overflow-hidden h-32">
+                <p class="opacity-50"># Initializing Rust-V8 bridge...</p>
+                <p>[OK] Loaded persistent signature set (4.2M hashes)</p>
+                <p>[OK] Allocation successful on kernel heap</p>
+                <p>[OK] Matching threads spawned (x16 core pool)</p>
+                <p class="text-primary">> Engine ready for high-fidelity dispatch.</p>
+            </div>
+        </div>
+
+        <!-- OAST Mesh Health -->
+        <div class="luxury-card p-8 border-t-4 border-t-primary">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 class="font-heading text-2xl font-bold">OAST Callback Mesh</h2>
+                    <p class="font-mono text-[10px] opacity-50 uppercase mt-1">Multi-Protocol Listeners</p>
+                </div>
+                <div class="animate-pulse flex items-center text-green-500 font-mono text-[10px] uppercase">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span> ACTIVE
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="bg-card p-4 rounded text-center">
+                    <p class="text-[9px] uppercase font-mono opacity-50 mb-1">Active Listeners</p>
+                    <p class="text-xl font-heading font-bold text-primary">{{ health.oast_mesh.listeners|length }}
+                        Protocols</p>
+                </div>
+                <div class="bg-card p-4 rounded text-center">
+                    <p class="text-[9px] uppercase font-mono opacity-50 mb-1">Global Hit Rate</p>
+                    <p class="text-xl font-heading font-bold text-primary">{{ health.oast_mesh.hit_rate }}</p>
+                </div>
+            </div>
+
+            <div class="bg-heading p-4 rounded font-mono text-[10px] text-primary/80 overflow-hidden h-32">
+                <p class="opacity-50"># Spawning global callback mesh...</p>
+                {% for protocol in health.oast_mesh.listeners %}
+                <p>[+] Protocol listener: {{ protocol }} registered on port 0.0.0.0:*</p>
+                {% endfor %}
+                <p class="text-primary">> Waiting for blind interaction triggers.</p>
+            </div>
+        </div>
+        <!-- Engine Resource Visualization -->
+        <div class="luxury-card p-8 mt-8 border border-primary/20 bg-primary/5">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="font-heading text-2xl font-bold">Resource Allocation Visualizer</h2>
+                    <p class="font-mono text-[10px] opacity-50 uppercase mt-1">Multi-Core Dispatch Telemetry</p>
+                </div>
+                <div class="flex space-x-2">
+                    <span class="px-2 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-mono rounded">JIT ACTIVE</span>
+                    <span class="px-2 py-1 bg-orange-500/10 text-orange-400 text-[10px] font-mono rounded">RUST
+                        ENGAGED</span>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <img src="data:image/png;base64,{{ kernel_load_plot }}" alt="Kernel Load Plot"
+                    class="max-w-full h-auto rounded shadow-2xl border border-white/5">
+            </div>
+        </div>
+</section>
+{% endblock %}

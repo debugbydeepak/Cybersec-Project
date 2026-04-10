@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Register Asset - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto px-8 py-20">
+    <div class="luxury-card p-10">
+        <h1 class="font-heading text-3xl font-bold mb-6 border-b border-border pb-4">Register Target Asset</h1>
+        
+        <form method="post" action="{% url 'assets:register' %}" class="space-y-6">
+            {% csrf_token %}
+            <div>
+                <label class="block font-mono text-xs uppercase tracking-widest text-[#C08552] mb-2">Target Domain URL</label>
+                <input type="url" name="domain_url" placeholder="https://example.com" class="w-full bg-transparent border-b border-border focus:border-primary px-2 py-3 outline-none font-body text-lg transition-colors placeholder-opacity-30" required>
+            </div>
+            
+            <div>
+                <label class="block font-mono text-xs uppercase tracking-widest text-[#C08552] mb-2 mt-6">Verification Method</label>
+                <select name="verification_method" class="w-full bg-[rgba(192,133,82,0.05)] border border-border focus:border-primary px-4 py-3 outline-none font-mono text-sm transition-colors rounded">
+                    <option value="DNS" class="bg-[#4B2E2B]">DNS TXT Record</option>
+                    <option value="FILE" class="bg-[#4B2E2B]">HTML File Upload</option>
+                    <option value="EMAIL" class="bg-[#4B2E2B]">Email Verification</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn-primary px-8 py-3 font-mono uppercase tracking-widest text-sm mt-8">
+                Proceed to Verification
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}

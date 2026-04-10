@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+
+{% block title %}Verify Domain - SECUREWAY{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-8 py-12">
+    <!-- Header -->
+    <div class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-border pb-6">
+        <div>
+            <a href="{% url 'dashboard:overview' %}"
+                class="font-mono text-xs opacity-70 hover:text-primary transition-colors tracking-widest uppercase mb-4 inline-block">
+                <i class="fas fa-arrow-left mr-2"></i> Dashboard
+            </a>
+            <h1 class="font-heading text-4xl text-heading font-bold mb-2">Verify Domain Ownership</h1>
+            <p class="font-mono text-sm opacity-80 text-primary">{{ domain.domain_url }}</p>
+        </div>
+
+        <div id="status-badge" class="mt-4 md:mt-0 font-mono text-xs px-4 py-2 border rounded-full uppercase tracking-widest font-bold flex items-center shadow-sm
+            {% if domain.verification_status %}
+                border-green-500/30 text-green-700 bg-green-500/5
+            {% else %}
+                border-[rgba(192,133,82,0.4)] text-[#C08552] bg-[rgba(192,133,82,0.05)]
+            {% endif %}">
+            {% if domain.verification_status %}
+            <i class="fas fa-check-circle mr-2"></i> Verified
+            {% else %}
+            <i class="fas fa-clock mr-2"></i> Pending
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-10">
+        <!-- Verification Steps (Tutorial UI) -->
+        <div class="lg:w-2/3 space-y-6">
+            <h2 class="font-heading text-2xl font-bold mb-6 text-heading">Verification Steps</h2>
+
+            <!-- Step 1 -->
+            <div
+                class="text-text flex items-start p-6 rounded-lg bg-[rgba(192,133,82,0.02)] border border-[rgba(192,133,82,0.1)]">
+                <div
+                    class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-mono text-sm font-bold border border-primary/20 mr-4 mt-0.5">
+                    1</div>
+                <div>
+                    <h3 class="font-heading text-xl font-bold mb-2">What is domain verification?</h3>
+                    <p class="font-body text-lg opacity-80 leading-relaxed">
+                        To prevent unauthorized scanning, we need to mathematically prove you control the server at
+                        <strong class="text-heading">{{ domain.domain_url }}</strong>. We do this by asking you to place
+                        a uniquely named file at the web root.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div
+                class="text-text flex items-start p-6 rounded-lg luxury-card border-l-[3px] border-l-primary/50 relative overflow-hidden">
+                <div
+                    class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-[#FFF8F0] shadow-md flex items-center justify-center font-mono text-sm font-bold mr-4 mt-0.5 z-10">
+                    2</div>
+                <div class="w-full relative z-10">
+                    <h3 class="font-heading text-xl font-bold mb-2">Download the verification file</h3>
+                    <p class="font-body text-lg opacity-80 leading-relaxed mb-4">
+                        Download this securely generated TXT file containing your unique token. Do not modify the name
+                        or contents of the file.
+                    </p>
+
+                    <div
+                        class="bg-[rgba(75,46,43,0.03)] border border-border rounded-md p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <div>
+                            <p class="font-mono text-xs opacity-60 uppercase tracking-widest mb-1">Filename</p>
+                            <p class="font-mono text-sm font-medium text-heading">{{ domain.verification_token }}.txt
+                            </p>
+                        </div>
+                        <a href="{% url 'dashboard:download_verification_file' domain.id %}"
+                            class="btn-primary px-5 py-2 text-xs font-mono uppercase tracking-widest rounded shadow-sm hover:shadow whitespace-nowrap">
+                            <i class="fas fa-download mr-2"></i> Download File
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div
+                class="text-text flex items-start p-6 rounded-lg bg-[rgba(192,133,82,0.02)] border border-[rgba(192,133,82,0.1)]">
+                <div
+                    class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-mono text-sm font-bold border border-primary/20 mr-4 mt-0.5">
+                    3</div>
+                <div>
+                    <h3 class="font-heading text-xl font-bold mb-2">Upload to your root folder</h3>
+                    <p class="font-body text-lg opacity-80 leading-relaxed mb-4">
+                        Transfer the downloaded file to your web server and place it in the public root directory (often
+                        `public_html`, `var/www/html`, or your `public` static folder).
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="text-text flex items-start p-6 rounded-lg luxury-card">
+                <div
+                    class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-mono text-sm font-bold border border-primary/20 mr-4 mt-0.5">
+                    4</div>
+                <div class="w-full">
+                    <h3 class="font-heading text-xl font-bold mb-2">Confirm web accessibility</h3>
+                    <p class="font-body text-lg opacity-80 leading-relaxed mb-4">
+                        Ensure the file is publicly accessible over HTTP/HTTPS. When you type the following URL into
+                        your browser, it should display the file contents without any redirects or 404 errors.
+                    </p>
+                    <div
+                        class="bg-[rgba(75,46,43,0.03)] border border-border rounded-md p-3 flex justify-between items-center group">
+                        <code id="check-url"
+                            class="font-mono text-xs text-primary break-all pr-4">{{ domain.domain_url|urlencode|iriencode|safe }}/{{ domain.verification_token }}.txt</code>
+                        <button onclick="copyUrl()"
+                            class="text-text opacity-50 hover:opacity-100 hover:text-primary transition-colors flex-shrink-0"
+                            title="Copy URL">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5 & 6 -->
+            <div
+                class="text-text flex items-start p-6 rounded-lg bg-[rgba(192,133,82,0.02)] border border-[rgba(192,133,82,0.1)]">
+                <div
+                    class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-mono text-sm font-bold border border-primary/20 mr-4 mt-0.5">
+                    5</div>
+                <div>
+                    <h3 class="font-heading text-xl font-bold mb-2">Click Verify and wait</h3>
+                    <p class="font-body text-lg opacity-80 leading-relaxed">
+                        Click the Verify button below. Our servers will instantly attempt to reach the URL and read the
+                        token. A <span class="text-green-700 font-bold">success</span> message means you're ready to
+                        start scanning.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Card -->
+        <div class="lg:w-1/3">
+            <div class="luxury-card p-8 sticky top-28 shadow-[0_10px_30px_rgba(192,133,82,0.1)]">
+                <h3 class="font-heading text-2xl font-bold mb-6 text-heading border-b border-border pb-4">Verification
+                    Check</h3>
+
+                <p class="font-body text-base opacity-80 mb-8">
+                    Once you have uploaded the file, click to run the automated check.
+                </p>
+
+                <div id="alert-container"
+                    class="hidden mb-6 p-4 rounded text-sm font-mono leading-relaxed border shadow-sm">
+                    <!-- Javascript populates this -->
+                </div>
+
+                {% if not domain.verification_status %}
+                <button id="verify-btn" onclick="checkVerification()"
+                    class="btn-primary w-full py-4 text-sm font-mono uppercase tracking-widest shadow-md hover:shadow-lg transition-all flex items-center justify-center">
+                    <i class="fas fa-shield-alt mr-2"></i> Verify Now
+                </button>
+
+                <div class="mt-6 pt-6 border-t border-border/40">
+                    <p class="text-[10px] font-mono uppercase tracking-widest opacity-40 mb-3 text-center">Presentation
+                        Shortcut</p>
+                    <button onclick="simulateVerification(event)"
+                        class="w-full text-center text-[10px] font-mono uppercase tracking-[0.2em] text-primary hover:text-heading transition-colors py-2 border border-dashed border-primary/20 rounded hover:border-primary/50">
+                        Fast-Track Verification (Showcase)
+                    </button>
+                </div>
+                {% else %}
+                <div
+                    class="btn-outline w-full py-4 text-sm font-mono uppercase tracking-widest text-center cursor-not-allowed opacity-70">
+                    <i class="fas fa-check-circle mr-2 text-green-600"></i> Already Verified
+                </div>
+                <a href="{% url 'dashboard:overview' %}"
+                    class="block w-full text-center mt-4 text-xs font-mono uppercase tracking-widest text-primary hover:underline">
+                    Return to Overview
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    function simulateVerification(event) {
+        const alertBox = document.getElementById('alert-container');
+        const btn = event.currentTarget;
+
+        // Show immediate loading state
+        btn.innerHTML = '<i class="fas fa-magic fa-spin mr-2"></i> Initializing Showcase Mode...';
+        btn.disabled = true;
+
+        fetch("{% url 'dashboard:simulate_verification' domain.id %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                alertBox.classList.remove('hidden');
+                alertBox.classList.add('bg-primary/5', 'border-primary/20', 'text-primary');
+                alertBox.innerHTML = `<i class="fas fa-magic mr-2"></i> Showcase Mode Enabled: ${data.message}`;
+                setTimeout(() => window.location.reload(), 1500);
+            });
+    }
+
+    function copyUrl() {
+        const urlText = document.getElementById('check-url').innerText;
+        navigator.clipboard.writeText(urlText).then(() => {
+            const icon = event.currentTarget.querySelector('i');
+            icon.classList.remove('fa-copy');
+            icon.classList.add('fa-check', 'text-green-500');
+            setTimeout(() => {
+                icon.classList.remove('fa-check', 'text-green-500');
+                icon.classList.add('fa-copy');
+            }, 2000);
+        });
+    }
+
+    function checkVerification() {
+        const btn = document.getElementById('verify-btn');
+        const alertBox = document.getElementById('alert-container');
+        const badge = document.getElementById('status-badge');
+
+        // Loading state
+        btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Checking...';
+        btn.disabled = true;
+        btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+        // Hide previous alerts
+        alertBox.classList.add('hidden');
+        alertBox.className = 'hidden mb-6 p-4 rounded text-sm font-mono leading-relaxed border shadow-sm transition-all';
+
+        fetch("{% url 'dashboard:check_verification' domain.id %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                alertBox.classList.remove('hidden');
+
+                if (data.status === 'verified') {
+                    // Success State!
+                    alertBox.classList.add('bg-green-50', 'border-green-200', 'text-green-800');
+                    alertBox.innerHTML = `<i class="fas fa-check-circle mr-2"></i> ${data.message}`;
+
+                    // Update button
+                    btn.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-600"></i> Verified!';
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-outline');
+
+                    // Update top badge
+                    badge.className = 'mt-4 md:mt-0 font-mono text-xs px-4 py-2 rounded-full uppercase tracking-widest font-bold flex items-center shadow-sm border border-green-500/30 text-green-700 bg-green-500/5';
+                    badge.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Verified';
+
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    // Failed State! ❌
+                    alertBox.classList.add('bg-red-50', 'border-red-200', 'text-red-800');
+                    alertBox.innerHTML = `<i class="fas fa-times-circle mr-2"></i> ${data.message}`;
+
+                    // Revert button
+                    btn.innerHTML = '<i class="fas fa-shield-alt mr-2"></i> Try Verify Again';
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-70', 'cursor-not-allowed');
+                }
+            })
+            .catch(error => {
+                alertBox.classList.remove('hidden');
+                alertBox.classList.add('bg-red-50', 'border-red-200', 'text-red-800');
+                alertBox.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> Network error occurred. Please try again.';
+
+                btn.innerHTML = '<i class="fas fa-shield-alt mr-2"></i> Verify Now';
+                btn.disabled = false;
+                btn.classList.remove('opacity-70', 'cursor-not-allowed');
+            });
+    }
+</script>
+{% endblock %}
+{% endblock %}

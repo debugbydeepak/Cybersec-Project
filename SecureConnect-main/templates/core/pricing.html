@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}SECUREWAY - Pricing Options{% endblock %}
+
+{% block content %}
+<section
+    class="min-h-[50vh] flex flex-col items-center justify-center px-8 w-full max-w-7xl mx-auto py-20 text-center relative z-10">
+    <h1 class="font-heading text-5xl md:text-6xl font-bold text-heading leading-tight mb-6">
+        Simple, Transparent <span class="gradient-text">Pricing</span>
+    </h1>
+    <p class="font-body text-xl opacity-80 max-w-2xl leading-relaxed mb-10 mx-auto">
+        Choose a plan that scales with your infrastructure. No hidden fees or complex usage limits.
+    </p>
+</section>
+
+<section class="py-12 px-8 max-w-7xl mx-auto border-t border-border mb-24">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <!-- Sentinel Plan (Free) -->
+        <div class="luxury-card p-10 flex flex-col justify-between border-opacity-40 bg-white/5">
+            <div>
+                <h4 class="font-mono text-xs uppercase tracking-[0.4em] text-primary mb-4 text-center">Sentinel</h4>
+                <div class="mb-10 text-center">
+                    <span class="text-3xl font-heading text-heading">₹</span>
+                    <span class="text-6xl font-heading font-bold text-heading">0</span>
+                    <span class="opacity-50 text-sm">/mo</span>
+                </div>
+                <ul class="space-y-4 mb-10 text-sm opacity-80">
+                    <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> 1 Domain
+                        Verification</li>
+                    <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> Basic BOLA
+                        Checking</li>
+                    <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> Community
+                        Support</li>
+                </ul>
+            </div>
+            <a href="{% url 'accounts:register' %}"
+                class="btn-outline text-center py-3 uppercase text-xs tracking-[0.2em] w-full">Start Free</a>
+        </div>
+
+        <!-- Sovereign Plan (Highlighted/Normal) -->
+        <div
+            class="luxury-card p-10 flex flex-col justify-between border-primary bg-primary/[0.04] transform md:scale-105 shadow-2xl relative">
+            <div
+                class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-background px-4 py-1 text-[10px] uppercase tracking-widest rounded-full">
+                Most Popular</div>
+            <div>
+                <h4 class="font-mono text-xs uppercase tracking-[0.4em] text-primary mb-4 text-center">Sovereign</h4>
+                <div class="mb-10 text-center">
+                    <span class="text-3xl font-heading text-heading">₹</span>
+                    <span class="text-6xl font-heading font-bold text-heading">4,999</span>
+                    <span class="opacity-50 text-sm">/mo</span>
+                </div>
+                <ul class="space-y-4 mb-10 text-sm text-left">
+                    <li class="flex items-center font-bold text-heading"><i
+                            class="fas fa-check text-primary mr-3 text-[10px]"></i> 10 Active Domains</li>
+                    <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> Full
+                        Autonomous Logic</li>
+                    <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> CI/CD
+                        Pipeline Agent</li>
+                    <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> Priority
+                        Engine Reasoning</li>
+                </ul>
+            </div>
+            <a href="{% url 'accounts:register' %}"
+                class="btn-primary text-center py-4 uppercase text-xs tracking-[0.3em] font-bold w-full shadow-lg">Upgrade
+                Now</a>
+        </div>
+
+        <!-- Vanguard Plan (Custom) -->
+        <div class="luxury-card p-10 flex flex-col justify-between border-opacity-40">
+            <div>
+                <h4 class="font-mono text-xs uppercase tracking-[0.4em] text-primary mb-4 text-center">Vanguard</h4>
+                <div class="mb-10 text-center">
+                    <span class="text-2xl font-heading text-heading uppercase font-bold tracking-widest">Custom</span>
+                </div>
+                <p class="text-sm opacity-60 mb-10 italic text-center">Tailored for enterprise-grade autonomous security
+                    orchestration and massive infrastructure.</p>
+                <ul class="space-y-4 mb-10 text-sm opacity-80 text-left">
+                    <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> On-Premise
+                        Neural Models</li>
+                    <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> 24/7
+                        Red-Teaming</li>
+                    <li class="flex items-center"><i class="fas fa-check text-primary mr-3 text-[10px]"></i> Dedicated
+                        CSO Liaison</li>
+                </ul>
+            </div>
+            <a href="#" class="btn-outline text-center py-3 uppercase text-xs tracking-[0.2em] w-full">Contact
+                Expert</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Target Domain - SECUREWAY{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-8 py-16">
+    <div class="mb-10 text-center">
+        <h1 class="font-heading text-4xl mb-3 text-heading font-bold">Add Target Domain</h1>
+        <p class="font-body opacity-80 text-lg">Register a new application domain for autonomous security scanning. You
+            will need to verify ownership in the next step.</p>
+    </div>
+
+    <div class="luxury-card p-10 md:p-14">
+        <form method="post" action="{% url 'dashboard:add_domain' %}" class="space-y-8">
+            {% csrf_token %}
+
+            <div class="space-y-2">
+                <label for="domain_url"
+                    class="block font-mono text-xs uppercase tracking-widest text-primary font-bold">Application
+                    URL</label>
+                <input type="url" id="domain_url" name="domain_url"
+                    class="w-full bg-transparent border-b border-border focus:border-primary px-2 py-4 outline-none font-body text-xl transition-colors placeholder-opacity-40 text-heading"
+                    placeholder="https://staging.example.com" required>
+                <p class="font-mono text-xs opacity-60 mt-2 px-2">Must include http:// or https://</p>
+            </div>
+
+            <div class="pt-6 border-t border-border flex justify-between items-center">
+                <a href="{% url 'dashboard:overview' %}"
+                    class="font-mono text-sm opacity-70 hover:text-primary transition-colors tracking-widest uppercase">
+                    <i class="fas fa-arrow-left mr-2"></i> Back
+                </a>
+                <button type="submit"
+                    class="btn-primary px-8 py-3.5 font-mono text-sm uppercase tracking-widest flex items-center shadow-md hover:shadow-lg transition-all">
+                    Register Domain <i class="fas fa-arrow-right ml-3"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

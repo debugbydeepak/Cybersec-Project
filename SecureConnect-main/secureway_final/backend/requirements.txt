@@ -1,0 +1,18 @@
+
+# Minimal dependencies for the high-fidelity mock
+fastapi
+uvicorn
+pydantic
+python-dotenv
+requests
+mcp
+networkx
+playwright
+regex
+celery
+redis
+presidio-analyzer
+presidio-anonymizer
+pyod
+google-generativeai
+pytest

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}SECUREWAY - Documentation{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-8 py-12 flex flex-col md:flex-row gap-12">
+    <!-- Sidebar Navigation -->
+    <aside class="md:w-1/4 sticky top-24 self-start">
+        <h4 class="font-heading text-2xl font-bold mb-6">Documentation</h4>
+        <nav class="space-y-2 font-mono text-sm">
+            <a href="#getting-started" class="block px-4 py-2 text-primary bg-[rgba(192,133,82,0.1)] rounded transition-colors">Getting Started</a>
+            <a href="#installation" class="block px-4 py-2 opacity-70 hover:opacity-100 hover:text-primary transition-colors">Installation</a>
+            <a href="#configuration" class="block px-4 py-2 opacity-70 hover:opacity-100 hover:text-primary transition-colors">Configuration</a>
+            <a href="#running-scans" class="block px-4 py-2 opacity-70 hover:opacity-100 hover:text-primary transition-colors">Running Scans</a>
+            <a href="#api-reference" class="block px-4 py-2 opacity-70 hover:opacity-100 hover:text-primary transition-colors">API Reference</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:w-3/4 luxury-card p-10 md:p-16">
+        <section id="getting-started" class="mb-16">
+            <h1 class="font-heading text-4xl font-bold mb-6">Getting Started with SECUREWAY</h1>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                Welcome to the official SECUREWAY documentation. Our autonomous agent is designed to integrate seamlessly into your existing CI/CD pipelines and development workflows, identifying complex business logic vulnerabilities before they reach production.
+            </p>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                To get started, you'll need an active API key from your dashboard and the SECUREWAY CLI client.
+            </p>
+        </section>
+
+        <section id="installation" class="mb-16 border-t border-border pt-12">
+            <h2 class="font-heading text-3xl font-bold mb-6">Installation</h2>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                The SECUREWAY CLI is distributed as a standalone binary for macOS, Linux, and Windows, or as a Docker container.
+            </p>
+            
+            <h3 class="font-heading text-xl font-bold mb-4 mt-8">Using cURL (macOS / Linux)</h3>
+            <div class="bg-heading text-[#FFF8F0] p-4 rounded-lg font-mono text-sm overflow-x-auto mb-6">
+                <code>curl -sSL https://secureway.dev/install.sh | bash</code>
+            </div>
+            
+            <h3 class="font-heading text-xl font-bold mb-4 mt-8">Using Docker</h3>
+            <div class="bg-heading text-[#FFF8F0] p-4 rounded-lg font-mono text-sm overflow-x-auto mb-6">
+                <code>docker pull secureway/scanner-agent:latest</code>
+            </div>
+        </section>
+        
+        <section id="configuration" class="mb-16 border-t border-border pt-12">
+            <h2 class="font-heading text-3xl font-bold mb-6">Configuration</h2>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                Authenticate your agent by providing your API key. You can do this via an environment variable.
+            </p>
+            <div class="bg-heading text-[#FFF8F0] p-4 rounded-lg font-mono text-sm overflow-x-auto mb-6">
+                <code>export SECUREWAY_API_KEY="sw_live_xxxxxxxxxxxxx"</code>
+            </div>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                You can also configure the agent using a <code>secureway.yml</code> file placed in your project root.
+            </p>
+            <div class="bg-heading text-[#FFF8F0] p-4 rounded-lg font-mono text-sm overflow-x-auto mb-6 whitespace-pre">
+<code>target_url: "https://staging.example.com"
+max_depth: 3
+modules:
+  - boolean_logic
+  - idor
+  - ssrf
+headers:
+  - "Authorization: Bearer test_token"</code>
+            </div>
+        </section>
+
+        <section id="running-scans" class="mb-16 border-t border-border pt-12">
+            <h2 class="font-heading text-3xl font-bold mb-6">Running Scans</h2>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                Initiate a scan directly from your terminal or CI environment.
+            </p>
+            <div class="bg-heading text-[#FFF8F0] p-4 rounded-lg font-mono text-sm overflow-x-auto mb-6">
+                <code>secureway scan --target https://staging.example.com --report-format json</code>
+            </div>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                The agent will autonomously map the application, execute business logic checks, and output a detailed report summarizing the findings.
+            </p>
+        </section>
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}SECUREWAY - Platform Features{% endblock %}
+
+{% block content %}
+<section class="min-h-[60vh] flex flex-col items-center justify-center px-8 w-full max-w-7xl mx-auto py-20 text-center relative z-10">
+    <h1 class="font-heading text-5xl md:text-6xl font-bold text-heading leading-tight mb-6">
+        Comprehensive <span class="gradient-text">Protection</span>
+    </h1>
+    <p class="font-body text-xl opacity-80 max-w-2xl leading-relaxed mb-10 mx-auto">
+        Discover how our autonomous agents identify complex business logic vulnerabilities that traditional scanners miss.
+    </p>
+</section>
+
+<section class="py-24 px-8 max-w-7xl mx-auto border-t border-border">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Feature 1 -->
+        <div class="luxury-card p-10 flex flex-col justify-center">
+            <i class="fas fa-spider text-primary text-4xl mb-6"></i>
+            <h3 class="font-heading text-3xl font-bold mb-4">Autonomous Spidering</h3>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                Our advanced engine systematically maps your application, understanding dynamic content, React/Next.js routes, and GraphQL schemas with human-like precision. It interacts with input fields, navigates multi-step forms, and logs its paths.
+            </p>
+            <ul class="space-y-3 font-mono text-sm opacity-90">
+                <li><i class="fas fa-check text-primary mr-2"></i> JavaScript Execution</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> SPA Framework Support</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> API Schema Inference</li>
+            </ul>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="luxury-card p-10 flex flex-col justify-center">
+            <i class="fas fa-unlock-alt text-primary text-4xl mb-6"></i>
+            <h3 class="font-heading text-3xl font-bold mb-4">BOLA & BAC Testing</h3>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                Broken Object Level Authorization (BOLA) and Broken Access Control (BAC) are heavily logic-based. Our agents create multiple account sessions, map resource IDs, and automatically attempt unauthorized cross-resource access.
+            </p>
+            <ul class="space-y-3 font-mono text-sm opacity-90">
+                <li><i class="fas fa-check text-primary mr-2"></i> Cross-User IDOR Checks</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> Privilege Escalation Scans</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> Multi-session State Sync</li>
+            </ul>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="luxury-card p-10 flex flex-col justify-center">
+            <i class="fas fa-brain text-primary text-4xl mb-6"></i>
+            <h3 class="font-heading text-3xl font-bold mb-4">AI-Driven Exploit Generation</h3>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                Instead of blindly throwing random payloads, SECUREWAY analyzes parameter context via LLMs (OpenAI integration) to construct tailored zero-day exploit variants that fit exactly into your business logic constraints.
+            </p>
+            <ul class="space-y-3 font-mono text-sm opacity-90">
+                <li><i class="fas fa-check text-primary mr-2"></i> Context-Aware Payloads</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> Automated PoC Scripts</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> Near-Zero False Positives</li>
+            </ul>
+        </div>
+        
+        <!-- Feature 4 -->
+        <div class="luxury-card p-10 flex flex-col justify-center">
+            <i class="fas fa-server text-primary text-4xl mb-6"></i>
+            <h3 class="font-heading text-3xl font-bold mb-4">Out-of-Band Callbacks</h3>
+            <p class="opacity-80 text-lg leading-relaxed mb-6">
+                Uncover blind vulnerabilities like Server-Side Request Forgery (SSRF) and asynchronous Remote Code Execution (RCE) via our dedicated listening infrastructure that correlates delayed network callbacks back to the specific scan injection.
+            </p>
+            <ul class="space-y-3 font-mono text-sm opacity-90">
+                <li><i class="fas fa-check text-primary mr-2"></i> Blind SSRF Tracking</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> OAST Infrastructure</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> DNS and HTTP Listening</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 px-8 text-center bg-[rgba(192,133,82,0.03)] border-y border-border">
+    <h2 class="font-heading text-4xl font-bold mb-6">Ready to secure your logic?</h2>
+    <p class="mb-10 opacity-80 max-w-2xl mx-auto">Integrate into your CI/CD pipeline and discover vulnerabilities before they hit production.</p>
+    <a href="{% url 'accounts:register' %}" class="btn-primary px-10 py-4 text-lg tracking-widest uppercase font-mono shadow-[0_0_20px_rgba(192,133,82,0.4)]">Get Started</a>
+</section>
+{% endblock %}

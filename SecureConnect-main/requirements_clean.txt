@@ -1,0 +1,10 @@
+Django>=5.0
+celery
+redis
+playwright
+openai
+reportlab
+django-tailwind
+python-dotenv
+requests
+matplotlib

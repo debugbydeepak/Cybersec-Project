@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}Shadow DOM Map - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="font-heading text-4xl font-bold mb-2">Attack Surface Mapping</h1>
+            <p class="font-mono text-sm opacity-70">Visualizing Shadow DOM and Hidden Routes via NetworkX.</p>
+        </div>
+        <a href="{% url 'dashboard:overview' %}"
+            class="btn-outline px-4 py-2 text-xs uppercase tracking-widest font-mono">Back to Center</a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Explorer Sidebar -->
+        <div class="lg:col-span-1 space-y-6">
+            <div class="luxury-card p-6">
+                <h3 class="font-heading font-bold mb-4 uppercase text-[10px] tracking-widest opacity-60">Crawler
+                    Controls</h3>
+                <form method="get" class="space-y-4">
+                    <div>
+                        <label class="block font-mono text-[9px] uppercase opacity-50 mb-2">Target Asset</label>
+                        <select name="url"
+                            class="w-full bg-[rgba(192,133,82,0.05)] border border-[rgba(192,133,82,0.2)] p-2 rounded font-mono text-[10px]">
+                            {% for d in domains %}
+                            <option value="{{ d.domain_url }}">{{ d.domain_url }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit"
+                        class="w-full btn-primary py-2 text-[10px] uppercase font-mono tracking-widest">
+                        Dispatch Probe
+                    </button>
+                </form>
+            </div>
+
+            <div class="luxury-card p-6">
+                <h3 class="font-heading font-bold mb-4 uppercase text-[10px] tracking-widest opacity-60">Discovery Stats
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between font-mono text-[10px]">
+                        <span class="opacity-60">Nodes Mapped:</span>
+                        <span class="text-primary font-bold">{{ graph_data.nodes|length }}</span>
+                    </div>
+                    <div class="flex justify-between font-mono text-[10px]">
+                        <span class="opacity-60">Connections:</span>
+                        <span class="text-primary font-bold">{{ graph_data.links|length }}</span>
+                    </div>
+                    <div class="flex justify-between font-mono text-[10px]">
+                        <span class="opacity-60">JS Coverage:</span>
+                        <span class="text-green-500 font-bold">{{ graph_data.coverage }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legend Overlay -->
+            <div class="luxury-card p-6 font-mono text-[9px] space-y-2">
+                <h3 class="font-heading font-bold mb-2 uppercase text-[10px] tracking-widest opacity-60">Protocol Legend
+                </h3>
+                <div class="flex items-center"><span
+                        class="w-2 h-2 bg-primary rounded-full mr-2 shadow-[0_0_5px_#C08552]"></span> LOGIC_CORE</div>
+                <div class="flex items-center"><span
+                        class="w-2 h-2 bg-[#ffbd2e] rounded-full mr-2 shadow-[0_0_5px_#ffbd2e]"></span> SHADOW_ROOT
+                </div>
+                <div class="flex items-center"><span
+                        class="w-2 h-2 bg-blue-500 rounded-full mr-2 shadow-[0_0_5px_#3b82f6]"></span> COMPONENT</div>
+                <div class="flex items-center"><span
+                        class="w-2 h-2 bg-red-500 rounded-full mr-2 shadow-[0_0_5px_#ef4444]"></span> THREAT_VECTOR
+                </div>
+                <div class="flex items-center"><span
+                        class="w-2 h-2 bg-green-500 rounded-full mr-2 shadow-[0_0_5px_#22c55e]"></span> AUTH_CHAIN</div>
+            </div>
+        </div>
+
+        <!-- Graph Visualization -->
+        <div class="lg:col-span-3">
+            <div
+                class="luxury-card h-[550px] relative overflow-hidden bg-[#050505] rounded-lg border border-primary/5 shadow-2xl">
+                <!-- Grid Overlay -->
+                <div class="absolute inset-0 opacity-[0.03] pointer-events-none"
+                    style="background-image: radial-gradient(circle, #C08552 1px, transparent 1px); background-size: 20px 20px;">
+                </div>
+
+                <!-- Scanner Beam Effect -->
+                <div
+                    class="absolute top-0 left-0 w-full h-[2px] bg-primary/20 shadow-[0_0_15px_rgba(192,133,82,0.3)] animate-scan z-10">
+                </div>
+
+                <!-- Control Badge -->
+                <div
+                    class="absolute top-4 left-4 z-20 font-mono text-[8px] bg-black/80 p-2 rounded border border-primary/20 backdrop-blur-sm">
+                    <span class="text-green-500 mr-2 animate-pulse">●</span> ENGINE_STATE: DISTRIBUTED_RECON
+                    <span class="ml-4 opacity-40">AUTO_SCALE: ON</span>
+                </div>
+
+                <div id="graph-container" class="absolute inset-0">
+                    <!-- SVG Connections -->
+                    <svg id="graph-svg" class="absolute inset-0 w-full h-full opacity-30 pointer-events-none">
+                        <!-- Lines will be drawn by JS -->
+                    </svg>
+
+                    <!-- Nodes -->
+                    {% for node in graph_data.nodes %}
+                    <div id="node-{{ node.id }}"
+                        class="graph-node absolute w-2.5 h-2.5 rounded-full cursor-pointer transition-all hover:scale-150 z-20 group"
+                        style="top: {{ node.top }}%; left: {{ node.left }}%; 
+                               background: {% if node.type == 'root' %}#C08552{% elif node.type == 'risk' %}#ef4444{% elif node.type == 'shadow' %}#ffbd2e{% elif node.type == 'auth' %}#22c55e{% else %}#3b82f6{% endif %};
+                               box-shadow: 0 0 10px {% if node.type == 'root' %}rgba(192,133,82,0.7){% elif node.type == 'risk' %}rgba(239,68,68,0.7){% elif node.type == 'auth' %}rgba(34,197,94,0.7){% else %}rgba(59,130,246,0.7){% endif %};"
+                        data-label="{{ node.label }}" data-type="{{ node.type|upper }}">
+                        <div
+                            class="hidden group-hover:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black/95 border border-primary/30 text-[7px] font-mono whitespace-nowrap rounded text-primary z-30 shadow-xl">
+                            {{ node.label }} <span class="opacity-50">[{{ node.type|upper }}]</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mt-4 flex justify-between items-center font-mono text-[9px] opacity-40 px-2">
+                <span>Kernel Telemetry: Active Dispatch via WebWorker</span>
+                <span>Spatial Mapping Resolution: 0.01μm</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes scan {
+        0% {
+            transform: translateY(0);
+            opacity: 0;
+        }
+
+        10% {
+            opacity: 1;
+        }
+
+        90% {
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(550px);
+            opacity: 0;
+        }
+    }
+
+    .animate-scan {
+        animation: scan 4s linear infinite;
+    }
+
+    .graph-node:hover {
+        box-shadow: 0 0 20px currentColor !important;
+        z-index: 50;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const svg = document.getElementById('graph-svg');
+        const links = [
+            {% for link in graph_data.links %}
+            { source: "{{ link.source }}", target: "{{ link.target }}" },
+        {% endfor %}
+        ];
+
+    function drawLinks() {
+        svg.innerHTML = '';
+        links.forEach(link => {
+            const sourceEl = document.getElementById('node-' + link.source);
+            const targetEl = document.getElementById('node-' + link.target);
+
+            if (sourceEl && targetEl) {
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                const sRect = sourceEl.getBoundingClientRect();
+                const tRect = targetEl.getBoundingClientRect();
+                const containerRect = svg.getBoundingClientRect();
+
+                const x1 = ((sRect.left + sRect.width / 2) - containerRect.left);
+                const y1 = ((sRect.top + sRect.height / 2) - containerRect.top);
+                const x2 = ((tRect.left + tRect.width / 2) - containerRect.left);
+                const y2 = ((tRect.top + tRect.height / 2) - containerRect.top);
+
+                line.setAttribute('x1', x1);
+                line.setAttribute('y1', y1);
+                line.setAttribute('x2', x2);
+                line.setAttribute('y2', y2);
+                line.setAttribute('stroke', 'rgba(192,133,82,0.3)');
+                line.setAttribute('stroke-width', '1');
+                svg.appendChild(line);
+            }
+        });
+    }
+
+    drawLinks();
+    window.addEventListener('resize', drawLinks);
+    });
+</script>
+{% endblock %}

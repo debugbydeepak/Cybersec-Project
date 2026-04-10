@@ -1,0 +1,296 @@
+# Core Web Framework
+Django
+Flask
+FastAPI
+Starlette
+
+# ASGI/WSGI Servers
+gunicorn
+uvicorn
+asgiref
+
+# Database & ORM
+psycopg2-binary
+SQLAlchemy
+
+# API & HTTP Clients
+requests
+httpx
+aiohttp
+aiohttp-retry
+
+# AI/ML APIs
+openai
+google-generativeai
+google-api-python-client
+google-auth
+google-auth-httplib2
+google-ai-generativelanguage
+googleapis-common-protos
+
+# Task Queue & Async
+celery
+redis
+kombu
+billiard
+amqp
+vine
+async-lru
+async-timeout
+aiosignal
+
+# Data Processing & Analysis
+pandas
+numpy
+scipy
+scikit-learn
+joblib
+threadpoolctl
+
+# Deep Learning
+tensorflow
+keras
+h5py
+ml-dtypes
+opt_einsum
+gast
+google-pasta
+protobuf
+astunparse
+flatbuffers
+libclang
+typing-extensions
+wrapt
+
+# Image Processing & Vision
+opencv-contrib-python
+Pillow
+matplotlib
+contourpy
+kiwisolver
+cycler
+fonttools
+ImageIO
+
+# OpenGL & Graphics
+moderngl
+glcontext
+PyOpenGL
+pygame
+pyqtgraph
+PyQt5
+PyQt5-Qt5
+PyQt5_sip
+pystray
+
+# Audio Processing
+pydub
+PyAudio; sys_platform == "win32"
+pyttsx3
+playsound
+sounddevice
+soundfile
+SpeechRecognition
+vosk
+gTTS
+
+# Translation & NLP
+deep-translator
+googletrans
+
+# Browser Automation & Web Scraping
+playwright
+beautifulsoup4
+selenium
+
+# Data Validation & Serialization
+pydantic
+pydantic_core
+annotated-types
+Js2Py
+pyjsparser
+
+# JSON & Schema
+jsonschema
+jsonschema-specifications
+rpds-py
+json5
+fastjsonschema
+jsonpointer
+
+# Environment & Configuration
+python-dotenv
+python-multipart
+
+# Utilities & Helpers
+click
+click-didyoumean
+click-plugins
+click-repl
+Werkzeug
+MarkupSafe
+Jinja2
+itsdangerous
+Babel
+arrow
+python-dateutil
+pytz
+tzdata
+tzlocal
+certifi
+charset-normalizer
+idna
+urllib3
+six
+packaging
+
+# File & Data Format Handling
+reportlab
+pandocfilters
+defusedxml
+bleach
+
+# AWS Integration
+boto3
+botocore
+s3transfer
+jmespath
+
+# Security & Cryptography
+cryptography
+cffi
+pycparser
+PyJWT
+rsa
+pyasn1
+pyasn1-modules
+
+# Async & Concurrency
+anyio
+sniffio
+nest-asyncio
+aiohappyeyeballs
+frozenlist
+multidict
+yarl
+
+# HTTP/2 Support
+h11
+h2
+hpack
+hyperframe
+
+# Jupyter & Development
+jupyter
+jupyter-core
+jupyter-client
+jupyter-lsp
+jupyter-events
+jupyter_server
+jupyter_server_terminals
+jupyterlab
+jupyterlab_server
+jupyterlab-pygments
+nbformat
+nbclient
+nbconvert
+notebook
+notebook_shim
+ipython
+ipykernel
+ipython-genutils
+traitlets
+executing
+stack-data
+jedi
+parso
+prompt_toolkit
+pickleshare
+pexpect
+ptyprocess
+wcwidth
+comm
+debugpy
+decorator
+matplotlib-inline
+pure-eval
+pygments
+Send2Trash
+terminado
+tornado
+zmq
+pyzmq
+websocket-client
+
+# Testing & Code Quality
+pytest
+pluggy
+exceptiongroup
+tomli
+iniconfig
+bandit
+check50
+lib50
+submit50
+
+# System & OS Utilities
+psutil
+distro
+comtypes
+WMI; sys_platform == "win32"
+pywin32; sys_platform == "win32"
+pywinpty; sys_platform == "win32"
+keyboard
+MouseInfo
+PyGetWindow
+PyMsgBox
+PyRect
+PyScreeze
+pytweening
+PyAutoGUI
+mss
+screen-brightness-control
+
+# Misc Utilities
+tqdm
+rich
+docopt
+more-itertools
+inflection
+fqdn
+rfc3339-validator
+rfc3986
+rfc3986-validator
+uri-template
+webcolors
+webencodings
+isoduration
+lark
+greenlet
+namex
+overrides
+attrs
+propcache
+cachetools
+grpcio
+grpcio-status
+proto-plus
+referencing
+rfc3987-syntax
+stevedore
+simplejson
+pyyaml
+
+# Additional APIs & Services
+twilio
+wikipedia
+pywhatkit
+jellyfish
+quandl
+metaflow
+
+# Code Inspection & Utilities
+ast-monitor
+annotated-doc
+dill
+sqlparse

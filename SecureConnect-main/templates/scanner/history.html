@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Operational History - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-8 py-10">
+    <div class="mb-10 border-b border-border pb-6 flex justify-between items-end">
+        <div>
+            <h1 class="font-heading text-4xl font-bold mb-2">Operational Command History</h1>
+            <p class="font-mono text-sm opacity-70">Complete audit trail of all logic orchestration events.</p>
+        </div>
+        <div class="flex space-x-4">
+            <a href="{% url 'scanner:download_all_vulnerabilities' %}"
+                class="btn-primary px-4 py-2 text-xs uppercase tracking-widest font-mono shadow-[0_5px_15px_rgba(192,133,82,0.2)]">
+                <i class="fas fa-file-archive mr-2"></i> Export Master Report
+            </a>
+            <a href="{% url 'dashboard:overview' %}"
+                class="btn-outline px-4 py-2 text-xs uppercase tracking-widest font-mono">Back to Center</a>
+        </div>
+    </div>
+
+    <div class="luxury-card overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-primary/5 text-[10px] uppercase tracking-widest font-mono text-primary/70">
+                <tr>
+                    <th class="px-6 py-4">Resource / Asset</th>
+                    <th class="px-6 py-4">Session ID</th>
+                    <th class="px-6 py-4">Timestamp</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4">Risk Score</th>
+                    <th class="px-6 py-4 text-right">Intel Report</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-border/10">
+                {% for scan in scans %}
+                <tr class="hover:bg-primary/[0.02] transition-colors group">
+                    <td class="px-6 py-4">
+                        <p class="text-xs font-mono font-bold break-all max-w-[250px]">{{ scan.domain.domain_url }}</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p class="text-[10px] font-mono opacity-40">{{ scan.id|stringformat:"s"|slice:":8" }}...</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p class="text-[10px] font-mono opacity-60">{{ scan.started_at|date:"Y-m-d H:i:s" }}</p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span
+                            class="text-[10px] font-mono {% if scan.status == 'COMPLETED' %}text-green-600{% elif scan.status == 'FAILED' %}text-red-600{% else %}text-yellow-600{% endif %}">
+                            ● {{ scan.status }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold text-primary">{{ scan.risk_score }}</span>
+                            <div class="w-16 h-1 bg-border rounded-full overflow-hidden">
+                                <div class="h-full bg-primary" style="width: {{ scan.risk_score }}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex justify-end space-x-3">
+                            <a href="{% url 'scanner:scan_detail' scan.id %}"
+                                class="px-2 py-1 bg-heading/5 text-heading/60 hover:text-primary transition-all rounded text-[9px] font-mono uppercase tracking-widest"
+                                title="View Details">
+                                Details
+                            </a>
+                            <a href="{% url 'scanner:download_report' scan.id %}"
+                                class="px-2 py-1 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all rounded text-[9px] font-mono uppercase tracking-widest"
+                                title="Download Report">
+                                Download Report
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-6 py-20 text-center">
+                        <i class="fas fa-history text-4xl opacity-10 mb-4 block"></i>
+                        <p class="font-mono text-sm opacity-30">No operational sessions indexed yet.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        <div class="luxury-card p-6">
+            <p class="font-mono text-[10px] uppercase opacity-40 mb-2">Total Audit Events</p>
+            <h3 class="font-heading text-3xl font-bold">{{ scans.count }}</h3>
+        </div>
+        <div class="luxury-card p-6">
+            <p class="font-mono text-[10px] uppercase opacity-40 mb-2">Verified Assets</p>
+            <h3 class="font-heading text-3xl font-bold text-green-600">{{ user.domains.count }}</h3>
+        </div>
+        <div class="luxury-card p-6 border-l-4 border-primary">
+            <p class="font-mono text-[10px] uppercase opacity-40 mb-2">Data Integrity</p>
+            <h3 class="font-heading text-3xl font-bold">100%</h3>
+        </div>
+    </div>
+</section>
+{% endblock %}

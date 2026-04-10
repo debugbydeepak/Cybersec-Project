@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-7xl mx-auto px-8 py-10">
+    <!-- India Innovation Showcase Banner -->
+    <div
+        class="mb-8 p-3 bg-gradient-to-r from-[rgba(192,133,82,0.15)] via-transparent to-[rgba(192,133,82,0.15)] border border-[rgba(192,133,82,0.2)] rounded-lg text-center relative overflow-hidden">
+        <div
+            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5">
+        </div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.4em] text-primary font-bold animate-pulse">
+            <i class="fas fa-award mr-2"></i> Official Showcase: India Innovation 2026 <i class="fas fa-award ml-2"></i>
+        </p>
+    </div>
+
+    <!-- Dashboard Header -->
+    <section class="mb-12">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-border pb-8">
+            <div>
+                <h1 class="font-heading text-5xl text-heading font-bold mb-3 tracking-tight">Operational Command</h1>
+                <div class="flex items-center space-x-4">
+                    <span
+                        class="flex items-center text-[10px] font-mono font-bold text-green-600 bg-green-500/5 px-3 py-1 rounded-full border border-green-500/20 shadow-sm animate-pulse">
+                        <i class="fas fa-satellite-dish mr-2"></i> SYSTEM ONLINE
+                    </span>
+                    <span class="text-xs font-mono opacity-40 uppercase tracking-[0.2em]">India Innovation 2026
+                        Showcase</span>
+                </div>
+            </div>
+            <div class="mt-6 md:mt-0 flex space-x-4">
+                <a href="{% url 'scanner:download_all_vulnerabilities' %}"
+                    class="btn-outline px-4 py-2 text-xs uppercase tracking-widest font-mono shadow-[0_5px_15px_rgba(192,133,82,0.2)]">
+                    <i class="fas fa-file-archive mr-2"></i> Export Master Report
+                </a>
+                <a href="{% url 'scanner:new_scan' %}"
+                    class="btn-primary px-8 py-3.5 text-xs font-mono uppercase tracking-widest rounded shadow-[0_5px_15px_rgba(192,133,82,0.2)] hover:shadow-[0_8px_25px_rgba(192,133,82,0.3)] transform hover:-translate-y-0.5 transition-all">
+                    <i class="fas fa-plus mr-2"></i> Deploy Scanner
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        <div class="luxury-card p-6 border-l-4 border-l-[#C08552]">
+            <p class="font-mono text-[9px] uppercase opacity-50 mb-1">Network Scans</p>
+            <p class="font-heading text-3xl font-bold">{{ total_scans }}</p>
+        </div>
+        <div class="luxury-card p-6 border-l-4 border-l-[#ff5f56]">
+            <p class="font-mono text-[9px] uppercase opacity-50 mb-1">Threats Found</p>
+            <p class="font-heading text-3xl font-bold">{{ total_vulns }}</p>
+        </div>
+        <div class="luxury-card p-6 border-l-4 border-l-[#ffbd2e]">
+            <p class="font-mono text-[9px] uppercase opacity-50 mb-1">Risk Index</p>
+            <p class="font-heading text-3xl font-bold">{{ avg_risk }}</p>
+        </div>
+        <div class="luxury-card p-6 border-l-4 border-l-[#27c93f]">
+            <p class="font-mono text-[9px] uppercase opacity-50 mb-1">Active Nodes</p>
+            <p class="font-heading text-3xl font-bold">{{ domains.count }}</p>
+        </div>
+    </div>
+
+    <!-- Command Console -->
+    <div class="mb-8 border-b border-border pb-2">
+        <h2 class="font-heading text-2xl font-bold text-heading">Registry Console</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <a href="{% url 'scanner:port_scan' %}"
+            class="luxury-card p-6 flex flex-col items-center text-center space-y-4 hover:border-primary transition-all group">
+            <div
+                class="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300 shadow-inner">
+                <i class="fas fa-satellite-dish text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-heading font-bold text-lg">Port Recon</h3>
+                <p class="text-[9px] uppercase font-mono opacity-50 tracking-widest mt-1">Kali-Engine Node</p>
+            </div>
+        </a>
+        <a href="{% url 'scanner:analyze_bola' %}"
+            class="luxury-card p-6 flex flex-col items-center text-center space-y-4 hover:border-primary transition-all group">
+            <div
+                class="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300 shadow-inner">
+                <i class="fas fa-brain text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-heading font-bold text-lg">BOLA Engine</h3>
+                <p class="text-[9px] uppercase font-mono opacity-50 tracking-widest mt-1">Cognitive Logic</p>
+            </div>
+        </a>
+        <a href="{% url 'scanner:pipeline' %}"
+            class="luxury-card p-6 flex flex-col items-center text-center space-y-4 hover:border-primary transition-all group">
+            <div
+                class="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300 shadow-inner">
+                <i class="fas fa-stream text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-heading font-bold text-lg">Pipelines</h3>
+                <p class="text-[9px] uppercase font-mono opacity-50 tracking-widest mt-1">Autonomous Hex</p>
+            </div>
+        </a>
+        <a href="{% url 'scanner:threat_intel' %}"
+            class="luxury-card p-6 flex flex-col items-center text-center space-y-4 hover:border-primary transition-all group">
+            <div
+                class="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300 shadow-inner">
+                <i class="fas fa-globe-asia text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-heading font-bold text-lg">Global Intelligence</h3>
+                <p class="text-[9px] uppercase font-mono opacity-50 tracking-widest mt-1">Vector DB</p>
+            </div>
+        </a>
+        <a href="{% url 'scanner:shadow_map' %}"
+            class="luxury-card p-6 flex flex-col items-center text-center space-y-4 hover:border-primary transition-all group">
+            <div
+                class="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300 shadow-inner">
+                <i class="fas fa-project-diagram text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-heading font-bold text-lg">Shadow Map</h3>
+                <p class="text-[9px] uppercase font-mono opacity-50 tracking-widest mt-1">V8 DOM Mapper</p>
+            </div>
+        </a>
+        <a href="{% url 'scanner:anomalies' %}"
+            class="luxury-card p-6 flex flex-col items-center text-center space-y-4 hover:border-primary transition-all group">
+            <div
+                class="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300 shadow-inner">
+                <i class="fas fa-wave-square text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-heading font-bold text-lg">Anomaly Lab</h3>
+                <p class="text-[9px] uppercase font-mono opacity-50 tracking-widest mt-1">PyOD Kernel</p>
+            </div>
+        </a>
+        <a href="{% url 'core:pii_scrubber' %}"
+            class="luxury-card p-6 flex flex-col items-center text-center space-y-4 hover:border-primary transition-all group">
+            <div
+                class="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300 shadow-inner">
+                <i class="fas fa-user-secret text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-heading font-bold text-lg">PII Scrubber</h3>
+                <p class="text-[9px] uppercase font-mono opacity-50 tracking-widest mt-1">Data Privacy</p>
+            </div>
+        </a>
+        <a href="{% url 'scanner:oast_mesh' %}"
+            class="luxury-card p-6 flex flex-col items-center text-center space-y-4 hover:border-primary transition-all group">
+            <div
+                class="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300 shadow-inner">
+                <i class="fas fa-network-wired text-xl"></i>
+            </div>
+            <div>
+                <h3 class="font-heading font-bold text-lg">OAST Mesh</h3>
+                <p class="text-[9px] uppercase font-mono opacity-50 tracking-widest mt-1">Out-of-Band</p>
+            </div>
+        </a>
+    </div>
+
+    <!-- Security Telemetry Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div class="luxury-card p-6 border border-primary/20 bg-primary/5">
+            <h2 class="font-heading text-xl font-bold text-heading mb-6 italic">Threat Propagation</h2>
+            <div class="flex justify-center h-64 items-center">
+                <img src="data:image/png;base64,{{ threat_plot }}" alt="Threat Intensity Plot"
+                    class="max-w-full h-auto rounded transition-transform hover:scale-105 duration-500">
+            </div>
+            <div class="mt-8 border-t border-primary/10 pt-6">
+                <img src="data:image/png;base64,{{ radar_plot }}" alt="Radar Plot"
+                    class="max-w-[80%] mx-auto h-auto opacity-90">
+            </div>
+        </div>
+        <div class="space-y-8">
+            <div class="luxury-card p-6 border border-primary/10 bg-primary/[0.02]">
+                <img src="data:image/png;base64,{{ vuln_plot }}" alt="Vuln Distribution Plot"
+                    class="max-w-full mx-auto h-auto rounded">
+            </div>
+            <div class="luxury-card p-6 border border-primary/10 bg-primary/[0.02]">
+                <h3 class="font-heading font-bold text-sm tracking-widest uppercase opacity-80 mb-4">Autonomous Latency
+                </h3>
+                <img src="data:image/png;base64,{{ latency_plot }}" alt="Latency Plot"
+                    class="max-w-full mx-auto h-auto rounded">
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-6">
+            <div class="flex justify-between items-end border-b border-border pb-2">
+                <h2 class="font-heading text-2xl font-bold text-heading">Registry Operations</h2>
+                <div class="flex items-center space-x-4">
+                    <a href="{% url 'scanner:download_all_vulnerabilities' %}"
+                        class="font-mono text-[9px] uppercase tracking-widest text-[#C08552] border border-[#C08552]/30 px-2 py-0.5 rounded hover:bg-[#C08552] hover:text-white transition-all">
+                        <i class="fas fa-file-archive mr-1"></i> Export Global Intel
+                    </a>
+                    <a href="{% url 'scanner:scan_history' %}"
+                        class="font-mono text-[9px] uppercase tracking-widest text-primary hover:text-heading transition-colors mb-1">
+                        View Full Audit Log <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="luxury-card overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-primary/5 text-[10px] uppercase tracking-widest font-mono text-primary/70">
+                        <tr>
+                            <th class="px-6 py-4">Resource</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4">Risk</th>
+                            <th class="px-6 py-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border/10">
+                        {% for scan in recent_scans %}
+                        <tr class="hover:bg-primary/[0.02] transition-colors border-b border-border/10">
+                            <td class="px-6 py-4">
+                                <p class="text-xs font-mono font-bold break-all max-w-[200px]">{{ scan.domain.domain_url
+                                    }}</p>
+                                <p class="text-[9px] font-mono opacity-40">ID: {{ scan.id|stringformat:"s"|slice:":8"
+                                    }}...</p>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="text-[10px] font-mono {% if scan.status == 'COMPLETED' %}text-green-600{% elif scan.status == 'FAILED' %}text-red-600{% else %}text-yellow-600{% endif %}">
+                                    ● {{ scan.status }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-xs font-bold text-primary">{{ scan.risk_score }}</span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex flex-col sm:flex-row justify-end gap-2">
+                                    <a href="{% url 'scanner:scan_detail' scan.id %}"
+                                        class="px-3 py-1 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all rounded text-[10px] font-mono uppercase tracking-widest inline-flex items-center">
+                                        <i class="fas fa-eye mr-1.5"></i> Details
+                                    </a>
+                                    <a href="{% url 'scanner:download_report' scan.id %}"
+                                        class="px-3 py-1 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all rounded text-[10px] font-mono uppercase tracking-widest inline-flex items-center">
+                                        <i class="fas fa-file-download mr-1.5"></i> Download Report
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="space-y-6">
+            <h2 class="font-heading text-2xl font-bold border-b border-border pb-2">Target Assets</h2>
+            <div class="luxury-card p-6">
+                <ul class="space-y-4">
+                    {% for d in domains %}
+                    <li
+                        class="flex justify-between items-center text-sm font-mono border-b border-primary/10 pb-4 last:border-0 last:pb-0 group">
+                        <span class="truncate max-w-[150px] opacity-80 group-hover:opacity-100 transition-opacity">{{
+                            d.domain_url }}</span>
+                        <div class="flex items-center space-x-4">
+                            <a href="{% url 'dashboard:verify_domain' d.id %}"
+                                class="text-[10px] uppercase tracking-widest text-primary hover:text-heading transition-colors"
+                                title="Manage Domain Logic">
+                                <i class="fas fa-cog text-xs"></i>
+                            </a>
+                            <i
+                                class="fas {% if d.verification_status %}fa-check-circle text-green-500 shadow-[0_0_8px_rgba(34,197,94,0.3)]{% else %}fa-clock text-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.3)]{% endif %} transition-all duration-300"></i>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

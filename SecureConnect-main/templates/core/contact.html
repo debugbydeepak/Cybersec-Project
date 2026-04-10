@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}SECUREWAY - Contact Support{% endblock %}
+
+{% block content %}
+<section
+    class="min-h-[50vh] flex flex-col items-center justify-center px-8 w-full max-w-7xl mx-auto py-20 text-center relative z-10">
+    <h1 class="font-heading text-5xl md:text-6xl font-bold text-heading leading-tight mb-6">
+        SecureWay <span class="gradient-text">Command</span> Support
+    </h1>
+    <p class="font-body text-xl opacity-80 max-w-2xl leading-relaxed mb-10 mx-auto">
+        Reach out to our elite operational team for any inquiries, integrations, or technical assistance with the
+        Autonomous Logic Engine.
+    </p>
+</section>
+
+<section class="py-24 px-8 max-w-3xl mx-auto border-t border-border">
+    <div class="luxury-card p-12 text-center">
+        <i class="fas fa-headset text-primary text-5xl mb-8"></i>
+        <h3 class="font-heading text-3xl font-bold mb-8 uppercase tracking-widest">Contact Information</h3>
+
+        <div class="space-y-8 font-mono">
+            <div class="p-6 bg-[rgba(192,133,82,0.05)] border border-primary/20 rounded-lg">
+                <p class="text-[10px] uppercase text-primary mb-2 tracking-widest">Direct Mobilization Line</p>
+                <p class="text-2xl font-bold text-heading tracking-wider">
+                    <i class="fas fa-phone mr-3 text-primary opacity-70"></i>+91 - 9315908389
+                </p>
+            </div>
+
+            <div class="p-6 bg-[rgba(192,133,82,0.05)] border border-primary/20 rounded-lg">
+                <p class="text-[10px] uppercase text-primary mb-2 tracking-widest">SecureWay Email Hub</p>
+                <p class="text-xl font-bold text-heading tracking-wider">
+                    <a href="mailto:support@secureway.tech" class="hover:text-primary transition-colors">
+                        <i class="fas fa-envelope mr-3 text-primary opacity-70"></i>support@secureway.tech
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <p class="mt-12 text-xs font-mono opacity-50 uppercase tracking-[0.2em]">
+            Operational 24/7 • Response ETA: < 1HR </p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Verify Asset - SECUREWAY{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto px-8 py-20">
+    <div class="luxury-card p-10">
+        <h1 class="font-heading text-3xl font-bold mb-2">Verify Asset Ownership</h1>
+        <p class="font-mono text-sm opacity-70 mb-8 pb-4 border-b border-border">Target: <span class="text-[#C08552]">{{ domain.domain_url }}</span></p>
+        
+        <div class="space-y-6 mb-10">
+            {% if domain.verification_method == 'DNS' %}
+                <p class="font-body text-lg">Add the following TXT record to your domain's DNS configuration:</p>
+                <div class="bg-[rgba(0,0,0,0.3)] p-4 rounded border border-[rgba(192,133,82,0.3)] font-mono text-sm text-green-400 select-all">
+                    secureway-verification={{ domain.verification_token }}
+                </div>
+            {% elif domain.verification_method == 'FILE' %}
+                <p class="font-body text-lg">Upload the following file to the root of your domain:</p>
+                <div class="bg-[rgba(0,0,0,0.3)] p-4 rounded border border-[rgba(192,133,82,0.3)] font-mono text-sm text-green-400 select-all">
+                    Filename: secureway-{{ domain.verification_token }}.txt<br>
+                    Content: {{ domain.verification_token }}
+                </div>
+            {% else %}
+                <p class="font-body text-lg">A verification email has been sent to the webmaster. Follow the instructions to proceed.</p>
+            {% endif %}
+        </div>
+        
+        <form method="post" action="{% url 'assets:verify' domain.id %}" class="flex gap-4">
+            {% csrf_token %}
+            <button type="submit" class="btn-primary px-8 py-3 font-mono uppercase tracking-widest text-sm shadow-[0_0_15px_rgba(192,133,82,0.3)]">
+                Verify Now
+            </button>
+            <a href="{% url 'dashboard:overview' %}" class="btn-outline px-8 py-3 font-mono uppercase tracking-widest text-sm">
+                Verify Later
+            </a>
+        </form>
+    </div>
+</section>
+{% endblock %}
